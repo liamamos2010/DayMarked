@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DayMark</title>
+<script>if(!localStorage.getItem('daymark-profile-alex'))window.location.replace('landing.html');</script>
+<script>function localDayKey(d){d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}</script>
+<style>
+:root{--bg:#070b12;--panel:#0e1624;--panel2:#111d2e;--text:#e8f0ff;--muted:#8ea0ba;--line:#20304a;--blue:#3b82f6;--soft:#102a50;--green:#35d07f;--red:#f87171;--yellow:#fbbf24;--shadow:0 18px 48px #0008}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 0,#10274a,transparent 32%),var(--bg);color:var(--text);font:15px Inter,ui-sans-serif,system-ui,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}.app{display:flex;min-height:100vh}.side{width:238px;background:#0a111d;border-right:1px solid var(--line);padding:24px 15px;display:flex;flex-direction:column}.brand{font-size:22px;font-weight:800;padding:0 12px 30px}.brand span{color:#75aaff}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:var(--muted);text-align:left;padding:12px 13px;border-radius:10px;font-weight:600}.nav button:hover,.nav .active{background:var(--soft);color:#75aaff}.bottom{margin-top:auto;border-top:1px solid var(--line);padding-top:16px}.profile{display:flex;align-items:center;gap:10px;padding:14px 10px 0}.avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#173b70;color:#75aaff;font-weight:800}.main{width:100%;max-width:1320px;margin:auto;padding:36px 5vw}.top{display:flex;justify-content:space-between;align-items:start;margin-bottom:25px}.eyebrow{color:#75aaff;font-weight:700;font-size:12px;letter-spacing:.08em}.title{font-size:32px;letter-spacing:-1px;margin:6px 0}.subtitle,.hint{color:var(--muted);margin:0}.date{color:var(--muted)}.view{display:none}.view.active{display:block}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.primary,.secondary,.danger{border:1px solid transparent;border-radius:9px;padding:10px 14px;font-weight:700}.primary{background:var(--blue);color:#fff}.secondary{background:var(--soft);border-color:#245599;color:#a9c8ff}.danger{background:#3c1720;color:#ffaaaa}.card{background:#0e1624ef;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}.card h2{font-size:17px;margin:0 0 5px}.head{display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:18px}.layout{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(360px,1.15fr);gap:20px}.form{display:grid;gap:13px}.field{display:grid;gap:6px}.field label{font-size:12px;color:var(--muted);font-weight:700}.field input,.field textarea,.field select,.filters input,.filters select{width:100%;border:1px solid var(--line);border-radius:9px;background:#09111e;color:var(--text);padding:10px;outline:0}.field textarea{min-height:90px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.filters{display:grid;grid-template-columns:1fr 150px;gap:9px;margin-bottom:14px}.list{display:grid;gap:9px;max-height:630px;overflow:auto}.item{border:1px solid var(--line);background:#0a121f;border-radius:11px;padding:14px;display:grid;gap:9px}.item.done,.item.completed{opacity:.55}.item.done .item-title,.item.completed .item-title{text-decoration:line-through}.item-top{display:flex;justify-content:space-between;gap:10px}.item-title{font-weight:800}.meta{font-size:12px;color:var(--muted)}.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{font-size:11px;padding:4px 7px;border-radius:20px;background:var(--soft);color:#a9c8ff}.chip.overdue{background:#3c1720;color:#ffaaaa}.chip.complete{background:#123a2a;color:#8ff0b6}.actions{display:flex;gap:7px;flex-wrap:wrap}.small{border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:7px;padding:6px 8px}.small:hover{color:var(--text);border-color:var(--blue)}.empty{color:var(--muted);padding:20px 0}.dashboard-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:20px}.dashboard-lower{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}.mini-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.mini-weekday{font-size:10px;color:var(--muted);text-align:center;padding-bottom:4px}.mini-day{min-height:34px;border:1px solid var(--line);border-radius:7px;background:#0a121f;color:var(--muted);font-size:11px;padding:5px;text-align:center;cursor:pointer}.mini-day:hover,.mini-day.today{border-color:var(--blue);color:var(--text);background:#0d2340}.mini-day.has-items{box-shadow:inset 0 -3px var(--green)}.mini-day.empty{border:0;background:transparent}.calendar-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.weekday{color:var(--muted);font-size:12px;text-align:center;padding:6px}.day{min-height:130px;border:1px solid var(--line);border-radius:10px;background:#0a121f;padding:8px;display:grid;align-content:start;gap:5px}.day.other{opacity:.4}.day.today{border-color:var(--blue);box-shadow:inset 0 2px var(--blue)}.day.selected{background:#0d2340}.day-number{font-weight:800}.cal-item{font-size:11px;padding:5px;border-radius:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:grab}.cal-item.goal{background:#26315b;color:#b8c5ff}.cal-item.task{background:#123a2a;color:#8ff0b6}.cal-item.habit{background:#3b2b12;color:#fcd47b}.cal-item.completed{text-decoration:line-through;opacity:.55}.calendar-bottom{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}.unscheduled{min-height:100px}.drop-hint{color:var(--muted);font-size:12px;margin:0 0 12px}.setting{display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid var(--line);padding:16px 0}.setting p{color:var(--muted);font-size:13px;margin:5px 0}.toggle{position:relative;width:42px;height:24px;flex:none}.toggle input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;background:#263750;border-radius:20px}.slider:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;border-radius:50%;background:#8ea0ba;transition:.2s}.toggle input:checked+.slider{background:var(--blue)}.toggle input:checked+.slider:before{transform:translateX(18px);background:#fff}.rhythm-card{display:grid;grid-template-columns:210px 1fr;gap:24px;align-items:center}.rhythm-ring{width:190px;height:190px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--blue) calc(var(--progress,0)*1%),#172641 0);transition:background .3s ease}.rhythm-ring::after{content:"";position:absolute;width:148px;height:148px;border-radius:50%;background:var(--panel)}.rhythm-ring>div{position:relative;text-align:center;z-index:1}.rhythm-percent{font-size:38px;font-weight:800}.rhythm-breakdown{display:grid;gap:8px}.rhythm-line{display:flex;justify-content:space-between;gap:12px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--line)}.rhythm-line.done{color:var(--text)}.rhythm-line strong{color:var(--green)}.rhythm-pop{animation:rhythm-pop .35s ease}@keyframes rhythm-pop{50%{transform:scale(1.035)}}@media(prefers-reduced-motion:reduce){.rhythm-ring{transition:none}.rhythm-pop{animation:none}}.modal{position:fixed;inset:0;background:#02050bbd;display:grid;place-items:center;padding:20px;z-index:5}.modal[hidden]{display:none}.modal-card{width:min(430px,100%);background:var(--panel);border:1px solid #315789;border-radius:16px;padding:24px;box-shadow:var(--shadow)}.modal-card h2{margin:0 0 8px}.modal-actions{display:flex;gap:10px;margin-top:20px}.toast{position:fixed;right:20px;bottom:20px;background:#122a4d;border:1px solid #3267a8;color:#dbeafe;padding:13px 16px;border-radius:10px;z-index:6}.toast[hidden]{display:none}@media(max-width:850px){.side{width:70px;padding:18px 9px}.brand{font-size:0;text-align:center;padding:0 0 22px}.brand span{font-size:24px}.nav button{font-size:0;text-align:center;padding:12px}.nav button:before{font-size:20px}.nav button:nth-child(1):before{content:'⌂'}.nav button:nth-child(2):before{content:'✓'}.nav button:nth-child(3):before{content:'▣'}.nav button:nth-child(4):before{content:'◎'}.nav button:nth-child(5):before{content:'◷'}.nav button:nth-child(6):before{content:'✦'}.nav button:nth-child(7):before{content:'⏰'}.nav button:nth-child(8):before{content:'▥'}.nav button:nth-child(9):before{content:'✧'}.nav button:nth-child(10):before{content:'⚙'}.profile{justify-content:center;padding-left:0}.profile div:not(.avatar){display:none}.main{padding:25px 18px}.layout,.calendar-bottom,.dashboard-grid,.dashboard-lower{grid-template-columns:1fr}.rhythm-card{grid-template-columns:1fr;justify-items:center}.rhythm-breakdown{width:100%}.top{gap:15px}.date{display:none}}@media(max-width:520px){.row,.filters{grid-template-columns:1fr}.calendar-grid{gap:3px}.day{min-height:90px;padding:5px}.cal-item{font-size:10px;padding:3px}.weekday{font-size:10px}.mini-day{min-height:30px;padding:4px}}
+</style>
+</head>
+<body>
+<div class="app"><aside class="side"><div class="brand"><span>✦</span> DayMark</div><nav class="nav"><button class="active" data-view="dashboard">Dashboard</button><button data-view="tasks">Tasks</button><button data-view="calendar">Calendar</button><button data-view="goals">Goals</button><button data-view="habits">Habits</button><button data-view="journal">Journal</button><button data-view="alarms">Alarms</button><button data-view="stats">Stats</button><button data-view="ai">AI Chat</button></nav><div class="bottom"><button class="nav" data-view="settings" style="width:100%;background:none;color:var(--muted);text-align:left;padding:12px">⚙ &nbsp; Settings</button><div class="profile"><div class="avatar">A</div><div><b>Alex Morgan</b><br><small style="color:var(--muted)">Personal space</small></div></div></div></aside>
+<main class="main" id="main"><header class="top"><div><div class="eyebrow">ALEX MORGAN / PERSONAL SPACE</div><h1 class="title" id="title">Good morning, Alex</h1><p class="subtitle" id="subtitle">A little progress is still progress.</p></div><div class="date" id="clock"></div></header>
+<section class="view active" id="dashboardView"><div class="dashboard-grid"><div class="card rhythm-card"><div class="rhythm-ring" id="rhythmRing" style="--progress:0"><div><div class="rhythm-percent" id="rhythmPercent">0%</div><span class="hint" id="rhythmCount">0 of 0 complete</span></div></div><div><div class="head"><div><h2>Daily Rhythm</h2><p class="subtitle">A transparent score from enabled contributors.</p></div><strong id="rhythmSummary">0%</strong></div><div class="rhythm-breakdown" id="rhythmBreakdown"></div></div></div><article class="card mini-calendar-card"><div class="head"><div><h2>Small calendar</h2><p class="subtitle" id="dashboardDateLabel">Your month at a glance.</p></div><button class="link" data-view="calendar">Open calendar →</button></div><div class="mini-calendar" id="dashboardCalendar"></div></article></div><div class="dashboard-lower"><article class="card"><div class="head"><div><h2>Today's focus</h2><p class="subtitle">What deserves your attention first.</p></div><button class="link" data-view="tasks">See tasks →</button></div><div class="list" id="dashboardTasks"></div></article><article class="card"><div class="head"><div><h2>Goals in motion</h2><p class="subtitle">Keep the bigger picture close.</p></div><button class="link" data-view="goals">See goals →</button></div><div class="list" id="dashboardGoals"></div></article></div></section>
+<section class="view" id="goalsView"><div class="layout"><article class="card"><div class="head"><div><h2 id="goalFormTitle">Create a goal</h2><p class="subtitle">Goals exist independently from calendar placement.</p></div></div><form class="form" id="goalForm"><div class="field"><label>Title</label><input id="goalTitle" required maxlength="80" placeholder="Run a 5K"></div><div class="field"><label>Description</label><textarea id="goalDescription" placeholder="What does success look like?"></textarea></div><div class="row"><div class="field"><label>Deadline</label><input id="goalDeadline" type="date"></div><div class="field"><label>Priority</label><select id="goalPriority"><option>Low</option><option selected>Medium</option><option>High</option></select></div></div><div class="row"><div class="field"><label>Color</label><input id="goalColor" type="color" value="#7c8cff"></div><label class="setting"><span>Enabled</span><span class="toggle"><input id="goalEnabled" type="checkbox" checked><span class="slider"></span></span></label></div><label class="setting"><span>Count toward Daily Rhythm<p>Completing this goal contributes once.</p></span><span class="toggle"><input id="goalRhythm" type="checkbox" checked><span class="slider"></span></span></label><div class="toolbar"><button class="primary">Save goal</button><button class="secondary" type="button" id="cancelGoal" hidden>Cancel</button></div></form></article><article class="card"><div class="head"><div><h2>Goals</h2><p class="subtitle">Drag a goal onto a calendar date.</p></div><strong id="goalCount">0</strong></div><div class="list" id="goalList"></div></article></div></section>
+<section class="view" id="tasksView"><div class="layout"><article class="card"><div class="head"><div><h2 id="taskFormTitle">Create a task</h2><p class="subtitle">Tasks are saved before they are scheduled.</p></div></div><form class="form" id="taskForm"><div class="field"><label>Title</label><input id="taskTitle" required maxlength="80" placeholder="Call the dentist"></div><div class="field"><label>Details</label><textarea id="taskDetails"></textarea></div><div class="row"><div class="field"><label>Deadline</label><input id="taskDeadline" type="date"></div><div class="field"><label>Priority</label><select id="taskPriority"><option>Low</option><option selected>Medium</option><option>High</option></select></div></div><div class="row"><div class="field"><label>Color</label><input id="taskColor" type="color" value="#35d07f"></div><div class="field"><label>Assign to goal</label><select id="taskGoal"><option value="">No goal</option></select></div></div><label class="setting"><span>Count toward Daily Rhythm</span><span class="toggle"><input id="taskRhythm" type="checkbox"><span class="slider"></span></span></label><div class="toolbar"><button class="primary">Save task</button><button class="secondary" type="button" id="cancelTask" hidden>Cancel</button></div></form></article><article class="card"><div class="head"><div><h2>Tasks</h2><p class="subtitle">Unscheduled tasks remain available here.</p></div><strong id="taskCount">0</strong></div><div class="list" id="taskList"></div></article></div></section>
+<section class="view" id="calendarView"><article class="card"><div class="calendar-toolbar"><button class="secondary" id="prevMonth">←</button><h2 id="monthTitle"></h2><button class="secondary" id="nextMonth">→</button></div><div class="calendar-grid" id="calendar"></div></article><div class="calendar-bottom"><article class="card"><div class="head"><div><h2>Unscheduled</h2><p class="subtitle">Drag a goal or task onto a date.</p></div></div><div class="list unscheduled" id="unscheduled"></div></article><article class="card"><div class="head"><div><h2 id="selectedTitle">Select a date</h2><p class="subtitle">Everything planned for that day.</p></div></div><div class="list" id="dayItems"></div></article></div></section>
+<section class="view" id="journalView"><div class="layout"><article class="card"><div class="head"><div><h2>New journal entry</h2><p class="subtitle">A quiet, private space to think clearly.</p></div><span class="hint" id="draftStatus"></span></div><form class="form" id="journalForm"><div class="field"><label>Title</label><input id="journalTitle" required placeholder="What is on your mind?"></div><div class="field"><label>Entry</label><textarea id="journalBody" required style="min-height:300px" placeholder="Start writing..."></textarea></div><div class="toolbar"><button class="primary">Save entry</button><button class="secondary" type="button" id="newJournal">New entry</button></div></form><p class="privacy hint">Only saving a valid entry can contribute to Daily Rhythm. Opening Journal does not count.</p></article><article class="card"><div class="head"><div><h2>Journal history</h2><p class="subtitle">Search and revisit saved entries.</p></div><strong id="journalCount">0</strong></div><div class="filters"><input id="journalSearch" placeholder="Search entries"><input id="journalDate" type="date"></div><div class="list" id="journalList"></div></article></div></section>
+<section class="view" id="settingsView"><article class="card"><h2>Settings</h2><div class="setting"><span><b>Journaling contributes to Daily Rhythm</b><p>One valid saved journal entry per day counts once. Opening or editing does not add duplicate points.</p></span><span class="toggle"><input id="journalRhythm" type="checkbox"><span class="slider"></span></span></div></article></section>
+</main></div>
+<div class="modal" id="scheduleModal" hidden><div class="modal-card"><h2>Schedule item</h2><p class="subtitle" id="scheduleName"></p><div class="field" style="margin-top:16px"><label>Date</label><input id="scheduleDate" type="date"></div><div class="field" style="margin-top:12px"><label>Time (optional)</label><input id="scheduleTime" type="time"></div><div class="modal-actions"><button class="primary" id="saveSchedule">Save placement</button><button class="secondary" id="cancelSchedule">Cancel</button></div></div></div><div class="toast" id="toast" hidden></div>
+<script>
+const KEYS={goals:'daymark-goals-alex',tasks:'daymark-tasks-alex',placements:'daymark-calendar-alex',journal:'daymark-journal-alex',settings:'daymark-settings-alex'};let goals=JSON.parse(localStorage.getItem(KEYS.goals)||'[]'),tasks=JSON.parse(localStorage.getItem(KEYS.tasks)||'[]'),placements=JSON.parse(localStorage.getItem(KEYS.placements)||'[]'),journal=JSON.parse(localStorage.getItem(KEYS.journal)||'[]'),settings=JSON.parse(localStorage.getItem(KEYS.settings)||'{"journalRhythm":false}');let editGoal=null,editTask=null,editJournal=null,scheduleTarget=null,selectedDate=localDayKey(),month=new Date();const $=id=>document.getElementById(id);function persist(){Object.entries({goals,tasks,placements,journal}).forEach(([key,value])=>localStorage.setItem(KEYS[key],JSON.stringify(value)));localStorage.setItem(KEYS.settings,JSON.stringify(settings))}function id(){return crypto.randomUUID()}function esc(value){return String(value||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function toast(text){$('toast').textContent=text;$('toast').hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').hidden=true,2400)}function formatDate(date){return date?new Date(`${date}T12:00`).toLocaleDateString([], {month:'short',day:'numeric',year:'numeric'}):'No deadline'}function placement(type,itemId){return placements.find(p=>p.type===type&&p.itemId===itemId)}function savePlacement(type,itemId,date,time=''){const existing=placement(type,itemId);if(existing){existing.date=date;existing.time=time}else placements.push({id:id(),type,itemId,date,time});persist();renderAll()}function removePlacement(type,itemId){placements=placements.filter(p=>!(p.type===type&&p.itemId===itemId));persist();renderAll()}function overdue(date,done){return date&&!done&&date<localDayKey()}
+function rhythmContributors(){const today=localDayKey();const contributors=[...goals.filter(goal=>goal.enabled!==false&&goal.rhythm).map(goal=>({label:`Goal: ${goal.title}`,enabled:true,complete:goal.done})),...tasks.filter(task=>task.enabled!==false&&task.rhythm).map(task=>({label:`Task: ${task.title}`,enabled:true,complete:task.done}))];if(settings.journalRhythm)contributors.push({label:'Journal: daily entry',enabled:true,complete:journal.some(entry=>localDayKey(new Date(entry.createdAt))===today)});return contributors}
+function renderRhythm(animate=false){const contributors=rhythmContributors(),completed=contributors.filter(item=>item.complete).length,total=contributors.length,percent=total?Math.min(100,Math.round(completed/total*100)):0;$('rhythmPercent').textContent=`${percent}%`;$('rhythmSummary').textContent=`${percent}%`;$('rhythmCount').textContent=`${completed} of ${total} complete`;$('rhythmRing').style.setProperty('--progress',percent);$('rhythmBreakdown').innerHTML=contributors.length?contributors.map(item=>`<div class="rhythm-line ${item.complete?'done':''}"><span>${esc(item.label)}</span><strong>${item.complete?'+10':'0'}</strong></div>`).join(''):'<p class="empty">Enable a goal, task, or journaling in its settings to create contributors.</p>';if(animate){$('rhythmRing').classList.remove('rhythm-pop');void $('rhythmRing').offsetWidth;$('rhythmRing').classList.add('rhythm-pop')}}
+function renderGoals(){ $('goalCount').textContent=goals.length;$('goalList').innerHTML=goals.length?goals.map(g=>{const p=placement('goal',g.id);const progress=tasks.filter(t=>t.goalId===g.id&&t.done).length;return `<article class="item ${g.done?'completed':''}" draggable="true" data-drag-type="goal" data-drag-id="${g.id}"><div class="item-top"><span class="item-title">${esc(g.title)}</span><span class="chip" style="background:${g.color}33;color:${g.color}">${g.priority}</span></div><div class="meta">${esc(g.description)||'No description'} · ${formatDate(g.deadline)}</div><div class="chips"><span class="chip">${progress} task${progress===1?'':'s'} complete</span>${p?`<span class="chip">Scheduled ${formatDate(p.date)}</span>`:'<span class="chip">Unscheduled</span>'}${g.done?'<span class="chip complete">Complete</span>':''}${overdue(g.deadline,g.done)?'<span class="chip overdue">Overdue</span>':''}</div><div class="actions"><button class="small" data-goal-done="${g.id}">${g.done?'Reopen':'Complete'}</button><button class="small" data-schedule="goal:${g.id}">Schedule</button><button class="small" data-goal-edit="${g.id}">Edit</button><button class="small" data-goal-delete="${g.id}">Delete</button></div></article>`}).join(''):'<p class="empty">No goals yet.</p>';populateGoalSelect()}
+function renderTasks(){ if(!$('taskCount'))return;$('taskCount').textContent=tasks.length;$('taskList').innerHTML=tasks.length?tasks.map(t=>{const p=placement('task',t.id);return `<article class="item ${t.done?'done':''}" draggable="true" data-drag-type="task" data-drag-id="${t.id}"><div class="item-top"><span class="item-title">${esc(t.title)}</span><span class="chip" style="background:${t.color}33;color:${t.color}">${t.priority}</span></div><div class="meta">${esc(t.details)||'No details'} · ${formatDate(t.deadline)}</div><div class="chips"><span class="chip">${t.goalId?'Assigned to goal':'No goal'}</span>${p?`<span class="chip">Scheduled ${formatDate(p.date)}${p.time?' '+p.time:''}</span>`:'<span class="chip">Unscheduled</span>'}${t.done?'<span class="chip complete">Complete</span>':''}${overdue(t.deadline,t.done)?'<span class="chip overdue">Overdue</span>':''}</div><div class="actions"><button class="small" data-task-done="${t.id}">${t.done?'Reopen':'Complete'}</button><button class="small" data-schedule="task:${t.id}">Schedule</button><button class="small" data-task-edit="${t.id}">Edit</button><button class="small" data-task-delete="${t.id}">Delete</button></div></article>`}).join(''):'<p class="empty">No tasks yet.</p>'}
+function populateGoalSelect(){if(!$('taskGoal'))return;const selected=$('taskGoal').value;$('taskGoal').innerHTML='<option value="">No goal</option>'+goals.map(g=>`<option value="${g.id}">${esc(g.title)}</option>`).join('');$('taskGoal').value=selected}
+function renderCalendar(){const year=month.getFullYear(),mon=month.getMonth(),first=new Date(year,mon,1),start=(first.getDay()+6)%7,last=new Date(year,mon+1,0).getDate();$('monthTitle').textContent=month.toLocaleDateString([], {month:'long',year:'numeric'});let html=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="weekday">${d}</div>`).join('');for(let i=0;i<start;i++)html+='<div class="day other"></div>';for(let d=1;d<=last;d++){const date=`${year}-${String(mon+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;const items=placements.filter(p=>p.date===date);html+=`<div class="day ${date===selectedDate?'selected':''} ${date===localDayKey()?'today':''}" data-date="${date}" data-drop-date="${date}"><div class="day-number">${d}</div>${items.map(p=>{const item=p.type==='goal'?goals.find(x=>x.id===p.itemId):tasks.find(x=>x.id===p.itemId);return item?`<div class="cal-item ${p.type} ${item.done?'completed':''}" draggable="true" data-drag-type="${p.type}" data-drag-id="${item.id}">${p.time?esc(p.time)+' · ':''}${esc(item.title)}</div>`:''}).join('')}</div>`}$('calendar').innerHTML=html;$('calendar').querySelectorAll('[data-date]').forEach(day=>day.addEventListener('click',()=>{selectedDate=day.dataset.date;renderCalendar();renderDayItems()}));$('calendar').querySelectorAll('[data-drop-date]').forEach(day=>{day.addEventListener('dragover',e=>e.preventDefault());day.addEventListener('drop',e=>{e.preventDefault();const data=e.dataTransfer.getData('text/plain').split(':');if(data.length===2)savePlacement(data[0],data[1],day.dataset.dropDate)})});renderUnscheduled();renderDayItems()}
+function renderUnscheduled(){const all=[...goals.map(g=>({type:'goal',item:g})),...tasks.map(t=>({type:'task',item:t}))].filter(x=>!placement(x.type,x.item.id));$('unscheduled').innerHTML=all.length?all.map(x=>`<div class="item" draggable="true" data-drag-type="${x.type}" data-drag-id="${x.item.id}"><b>${esc(x.item.title)}</b><span class="chip">${x.type}</span><button class="small" data-schedule="${x.type}:${x.item.id}">Schedule</button></div>`).join(''):'<p class="empty">Everything is scheduled.</p>'}
+function renderDayItems(){const items=placements.filter(p=>p.date===selectedDate);$('selectedTitle').textContent=`${formatDate(selectedDate)} plan`;$('dayItems').innerHTML=items.length?items.map(p=>{const item=p.type==='goal'?goals.find(x=>x.id===p.itemId):tasks.find(x=>x.id===p.itemId);return item?`<div class="item"><div class="item-top"><b>${esc(item.title)}</b><span class="chip">${p.type}</span></div><span class="meta">${p.time||'All day'} ${item.deadline===selectedDate?'· Deadline':''}</span><button class="small" data-remove-placement="${p.type}:${p.itemId}">Remove from date</button></div>`:''}).join(''):'<p class="empty">Nothing planned for this date.</p>'}
+function renderJournal(){const query=$('journalSearch').value.toLowerCase(),date=$('journalDate').value;const list=journal.filter(entry=>(!query||`${entry.title} ${entry.body}`.toLowerCase().includes(query))&&(!date||localDayKey(new Date(entry.createdAt))===date)).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));$('journalCount').textContent=list.length;$('journalList').innerHTML=list.length?list.map(entry=>`<article class="item"><div class="item-title">${esc(entry.title)}</div><div class="meta">${new Date(entry.createdAt).toLocaleString()} · ${esc(entry.body.slice(0,120))}</div><div class="actions"><button class="small" data-journal-edit="${entry.id}">Edit</button><button class="small" data-journal-delete="${entry.id}">Delete</button></div></article>`).join(''):'<p class="empty">No journal entries match.</p>'}
+function renderDashboard(){const today=localDayKey();const focus=tasks.filter(task=>!task.done).slice(0,3);$('dashboardTasks').innerHTML=focus.length?focus.map(task=>`<div class="item"><b>${esc(task.title)}</b><span class="meta">${task.deadline===today?'Due today':formatDate(task.deadline)}</span></div>`).join(''):'<p class="empty">No open tasks. Nice work.</p>';const activeGoals=goals.filter(goal=>goal.enabled!==false&&!goal.done).slice(0,3);$('dashboardGoals').innerHTML=activeGoals.length?activeGoals.map(goal=>`<div class="item"><b>${esc(goal.title)}</b><span class="meta">${formatDate(goal.deadline)}</span></div>`).join(''):'<p class="empty">No active goals yet.</p>';const year=month.getFullYear(),mon=month.getMonth(),first=new Date(year,mon,1),start=(first.getDay()+6)%7,last=new Date(year,mon+1,0).getDate();$('dashboardDateLabel').textContent=month.toLocaleDateString([], {month:'long',year:'numeric'});let html=['M','T','W','T','F','S','S'].map(day=>`<span class="mini-weekday">${day}</span>`).join('');for(let i=0;i<start;i++)html+='<span class="mini-day empty"></span>';for(let day=1;day<=last;day++){const date=`${year}-${String(mon+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`,hasItems=placements.some(item=>item.date===date),isToday=date===today;html+=`<button class="mini-day ${hasItems?'has-items':''} ${isToday?'today':''}" data-mini-date="${date}">${day}</button>`}$('dashboardCalendar').innerHTML=html;$('dashboardCalendar').querySelectorAll('[data-mini-date]').forEach(button=>button.addEventListener('click',()=>{selectedDate=button.dataset.miniDate;showView('calendar');renderCalendar() }))}
+function renderAll(){renderGoals();renderTasks();renderCalendar();renderJournal();renderRhythm();renderDashboard()}
+function showView(view){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));const target=$(view+'View')||$('dashboardView');target.classList.add('active');document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));const names={dashboard:['Good morning, Alex','A little progress is still progress.'],goals:['Goals','Create independently, schedule when ready.'],tasks:['Tasks','Focus on what is next.'],calendar:['Calendar','Plan goals, tasks, habits, and reminders in one place.'],journal:['Journal','A quiet place to put things into words.'],settings:['Settings','Make DayMark fit your rhythm.']};$('title').textContent=names[view]?.[0]||view;$('subtitle').textContent=names[view]?.[1]||'This section is ready to connect.'}
+function openSchedule(spec){const [type,itemId]=spec.split(':');const item=type==='goal'?goals.find(x=>x.id===itemId):tasks.find(x=>x.id===itemId);if(!item)return;scheduleTarget={type,itemId};const p=placement(type,itemId);$('scheduleName').textContent=item.title;$('scheduleDate').value=p?.date||selectedDate;$('scheduleTime').value=p?.time||'';$('scheduleModal').hidden=false}
+function resetGoal(){editGoal=null;$('goalForm').reset();$('goalColor').value='#7c8cff';$('goalEnabled').checked=true;$('goalFormTitle').textContent='Create a goal';$('cancelGoal').hidden=true}function resetTask(){editTask=null;$('taskForm').reset();$('taskColor').value='#35d07f';$('taskFormTitle').textContent='Create a task';$('cancelTask').hidden=true}
+$('goalForm').addEventListener('submit',e=>{e.preventDefault();const now=new Date().toISOString(),data={id:editGoal||id(),title:$('goalTitle').value.trim(),description:$('goalDescription').value.trim(),deadline:$('goalDeadline').value,priority:$('goalPriority').value,color:$('goalColor').value,enabled:$('goalEnabled').checked,rhythm:$('goalRhythm').checked,done:false,createdAt:now};goals=editGoal?goals.map(g=>g.id===editGoal?{...g,...data,done:g.done}:g):[...goals,data];persist();resetGoal();renderAll();toast('Goal saved.')});$('taskForm').addEventListener('submit',e=>{e.preventDefault();const now=new Date().toISOString(),data={id:editTask||id(),title:$('taskTitle').value.trim(),details:$('taskDetails').value.trim(),deadline:$('taskDeadline').value,priority:$('taskPriority').value,color:$('taskColor').value,goalId:$('taskGoal').value,rhythm:$('taskRhythm').checked,done:false,createdAt:now};tasks=editTask?tasks.map(t=>t.id===editTask?{...t,...data,done:t.done}:t):[...tasks,data];persist();resetTask();renderAll();toast('Task saved.')});$('cancelGoal').onclick=resetGoal;$('cancelTask').onclick=resetTask;
+$('journalForm').addEventListener('submit',e=>{e.preventDefault();const title=$('journalTitle').value.trim(),body=$('journalBody').value.trim();if(!title||!body)return;const now=new Date().toISOString();if(editJournal)journal=journal.map(entry=>entry.id===editJournal?{...entry,title,body,updatedAt:now}:entry);else journal.push({id:id(),title,body,createdAt:now,updatedAt:now});persist();editJournal=null;$('journalForm').reset();$('draftStatus').textContent='Saved just now';renderJournal();toast('Journal entry saved.')});$('newJournal').onclick=()=>{editJournal=null;$('journalForm').reset();$('draftStatus').textContent=''};['journalSearch','journalDate'].forEach(key=>$(key).addEventListener('input',renderJournal));['journalTitle','journalBody'].forEach(key=>$(key).addEventListener('input',()=>{if(!editJournal)$('draftStatus').textContent='Draft in progress'}));$('cancelGoal').onclick=resetGoal;$('cancelTask').onclick=resetTask;
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.view){if(b.dataset.view==='alarms')window.location.assign('<!doctype html>.html');else showView(b.dataset.view)}if(b.dataset.schedule)openSchedule(b.dataset.schedule);if(b.dataset.removePlacement){const [type,itemId]=b.dataset.removePlacement.split(':');removePlacement(type,itemId);toast('Calendar placement removed.')}if(b.dataset.journalEdit){const entry=journal.find(x=>x.id===b.dataset.journalEdit);if(entry){editJournal=entry.id;$('journalTitle').value=entry.title;$('journalBody').value=entry.body;$('draftStatus').textContent='Editing saved entry';showView('journal')}}if(b.dataset.journalDelete){journal=journal.filter(x=>x.id!==b.dataset.journalDelete);persist();renderJournal();toast('Journal entry deleted.')}if(b.dataset.goalDone){const g=goals.find(x=>x.id===b.dataset.goalDone);if(g){g.done=!g.done;persist();renderAll()}}if(b.dataset.taskDone){const t=tasks.find(x=>x.id===b.dataset.taskDone);if(t){t.done=!t.done;persist();renderAll()}}if(b.dataset.goalEdit){const g=goals.find(x=>x.id===b.dataset.goalEdit);if(g){editGoal=g.id;$('goalTitle').value=g.title;$('goalDescription').value=g.description;$('goalDeadline').value=g.deadline;$('goalPriority').value=g.priority;$('goalColor').value=g.color;$('goalEnabled').checked=g.enabled;$('goalRhythm').checked=g.rhythm;$('goalFormTitle').textContent='Edit goal';$('cancelGoal').hidden=false;showView('goals')}}if(b.dataset.taskEdit){const t=tasks.find(x=>x.id===b.dataset.taskEdit);if(t){editTask=t.id;$('taskTitle').value=t.title;$('taskDetails').value=t.details;$('taskDeadline').value=t.deadline;$('taskPriority').value=t.priority;$('taskColor').value=t.color;$('taskGoal').value=t.goalId;$('taskRhythm').checked=t.rhythm;$('taskFormTitle').textContent='Edit task';$('cancelTask').hidden=false;showView('tasks')}}if(b.dataset.goalDelete){goals=goals.filter(g=>g.id!==b.dataset.goalDelete);placements=placements.filter(p=>!(p.type==='goal'&&p.itemId===b.dataset.goalDelete));persist();renderAll();toast('Goal deleted.')}if(b.dataset.taskDelete){tasks=tasks.filter(t=>t.id!==b.dataset.taskDelete);placements=placements.filter(p=>!(p.type==='task'&&p.itemId===b.dataset.taskDelete));persist();renderAll();toast('Task deleted.')}});
+document.addEventListener('dragstart',e=>{const el=e.target.closest('[data-drag-id]');if(el)e.dataTransfer.setData('text/plain',`${el.dataset.dragType}:${el.dataset.dragId}`)});$('saveSchedule').onclick=()=>{if(scheduleTarget&&$('scheduleDate').value){savePlacement(scheduleTarget.type,scheduleTarget.itemId,$('scheduleDate').value,$('scheduleTime').value);selectedDate=$('scheduleDate').value;$('scheduleModal').hidden=true;toast('Calendar placement saved.')}};$('cancelSchedule').onclick=()=>$('scheduleModal').hidden=true;$('prevMonth').onclick=()=>{month.setMonth(month.getMonth()-1);renderCalendar()};$('nextMonth').onclick=()=>{month.setMonth(month.getMonth()+1);renderCalendar()};function clock(){$('clock').textContent=new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}function setup(){renderAll();clock();setInterval(clock,15000)}setup();
+</script>
+<script>
+document.getElementById('journalRhythm').checked=settings.journalRhythm;document.getElementById('journalRhythm').addEventListener('change',event=>{settings.journalRhythm=event.target.checked;persist();renderRhythm();toast(event.target.checked?'Journaling contributes to Daily Rhythm.':'Journaling removed from Daily Rhythm.')});
+document.getElementById('journalForm').addEventListener('submit',()=>setTimeout(renderRhythm,0));
+document.addEventListener('click',event=>{const button=event.target.closest('[data-goal-done],[data-task-done]');if(!button)return;setTimeout(()=>{const item=button.dataset.goalDone?goals.find(goal=>goal.id===button.dataset.goalDone):tasks.find(task=>task.id===button.dataset.taskDone);if(item?.done&&item.rhythm&&item.enabled!==false)toast('+10 Daily Rhythm.')},0)});
+</script>
+<script>
+const hadSavedRhythmChoice=localStorage.getItem(KEYS.settings)!==null;persist();$('goalRhythm').checked=true;$('taskRhythm').checked=true;const originalResetTask=resetTask;resetTask=()=>{originalResetTask();$('taskRhythm').checked=true};document.addEventListener('click',event=>{if(event.target.closest('[data-journal-delete]'))setTimeout(renderAll,0)});renderAll();
+</script>
+<script>
+const profileKey='daymark-profile-alex';let profile=JSON.parse(localStorage.getItem(profileKey)||'{"name":"Alex Morgan"}');const brand=document.querySelector('.brand');brand.style.cursor='pointer';brand.addEventListener('click',()=>showView('dashboard'));document.querySelector('.profile b').textContent=profile.name;
+const extraStyle=document.createElement('style');extraStyle.textContent='.brand{border:0;background:none;color:var(--text);text-align:left}.mood-card{margin-top:20px}.mood-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.mood-choice{border:1px solid var(--line);background:#0a121f;color:var(--text);border-radius:12px;padding:10px 6px;text-align:center}.mood-choice:hover,.mood-choice.selected{border-color:var(--blue);background:#0d2340}.mood-visual{font-size:28px;display:block;margin-bottom:6px}.mood-label{font-size:12px;color:var(--muted)}.home-summary{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.summary-value{font-size:24px;font-weight:800}.profile-editor{margin-top:18px;max-width:420px}.task-filter{margin-bottom:12px}@media(max-width:520px){.mood-grid{grid-template-columns:repeat(3,1fr)}.home-summary{grid-template-columns:1fr}}';document.head.append(extraStyle);
+function renderHomeExtras(){let mood=document.querySelector('.mood-card');if(!mood){mood=document.createElement('section');mood.className='card mood-card';mood.innerHTML='<div class="head"><div><h2>How are you feeling?</h2><p class="subtitle">A quick check-in, saved to your profile.</p></div></div><div class="mood-grid"><button class="mood-choice" data-mood="Energized"><span class="mood-visual">⚡</span><span class="mood-label">Energized</span></button><button class="mood-choice" data-mood="Good"><span class="mood-visual">☀️</span><span class="mood-label">Good</span></button><button class="mood-choice" data-mood="Okay"><span class="mood-visual">🙂</span><span class="mood-label">Okay</span></button><button class="mood-choice" data-mood="Low"><span class="mood-visual">🌧️</span><span class="mood-label">Low</span></button><button class="mood-choice" data-mood="Overwhelmed"><span class="mood-visual">🌊</span><span class="mood-label">Overwhelmed</span></button></div>';$('dashboardView').append(mood);mood.querySelectorAll('[data-mood]').forEach(button=>button.addEventListener('click',()=>{profile.mood=button.dataset.mood;profile.moodDate=new Date().toISOString();localStorage.setItem(profileKey,JSON.stringify(profile));mood.querySelectorAll('.mood-choice').forEach(item=>item.classList.toggle('selected',item===button));toast(`Mood saved: ${button.dataset.mood}.`)}))}if(profile.mood){const selected=mood.querySelector(`[data-mood="${profile.mood}"]`);if(selected)selected.classList.add('selected')}let summary=document.querySelector('.home-summary');if(!summary){summary=document.createElement('div');summary.className='home-summary';summary.innerHTML='<div class="card"><span class="hint">Today\'s tasks</span><div class="summary-value" id="homeTaskCount"></div></div><div class="card"><span class="hint">Active goals</span><div class="summary-value" id="homeGoalCount"></div></div><div class="card"><span class="hint">Journal entries</span><div class="summary-value" id="homeJournalCount"></div></div>';$('dashboardView').append(summary)}$('homeTaskCount').textContent=tasks.filter(task=>!task.done).length;$('homeGoalCount').textContent=goals.filter(goal=>goal.enabled!==false&&!goal.done).length;$('homeJournalCount').textContent=journal.length}
+function addProfileEditor(){if(document.querySelector('.profile-editor'))return;const settingsCard=$('#settingsView .card');if(!settingsCard)return;const block=document.createElement('div');block.className='profile-editor';block.innerHTML='<div class="field"><label for="profileName">Profile name</label><input id="profileName" maxlength="60"></div><button class="primary" id="saveProfile" style="margin-top:10px">Save profile</button>';settingsCard.append(block);$('profileName').value=profile.name;$('saveProfile').addEventListener('click',()=>{const name=$('profileName').value.trim();if(!name)return;profile.name=name;localStorage.setItem(profileKey,JSON.stringify(profile));document.querySelector('.profile b').textContent=name;toast('Profile saved.')})}const originalShowView=showView;showView=view=>{originalShowView(view);if(view==='settings')addProfileEditor()};renderHomeExtras();addProfileEditor();
+const originalRenderAll=renderAll;renderAll=()=>{originalRenderAll();renderHomeExtras()};
+</script>
+<script>
+const savedProfile=JSON.parse(localStorage.getItem('daymark-profile-alex')||'{}');const themeKey='daymark-theme-alex';const themeStyle=document.createElement('style');themeStyle.textContent='body[data-theme="light"]{--bg:#f4f8ff;--panel:#fff;--panel2:#f0f5fc;--text:#10203a;--muted:#60728c;--line:#d8e3f1;--soft:#e5efff;background:linear-gradient(135deg,#f8fbff,#eaf3ff)}body[data-theme="light"] .side{background:#fff}body[data-theme="light"] .card,body[data-theme="light"] .item,body[data-theme="light"] .mini-day{background:#fff}body[data-theme="light"] .field input,body[data-theme="light"] .field textarea,body[data-theme="light"] .field select,body[data-theme="light"] .filters input,body[data-theme="light"] .filters select{background:#f8fbff;color:var(--text)}body[data-theme="light"] .mini-day{background:#f4f8ff}';document.head.append(themeStyle);function applyTheme(){document.body.dataset.theme=localStorage.getItem(themeKey)||'light'}applyTheme();const userLabel=document.querySelector('.profile b');if(userLabel)userLabel.textContent=savedProfile.username?`@${savedProfile.username}`:(savedProfile.name||'Alex Morgan');const bottom=document.querySelector('.bottom');if(bottom&&!bottom.querySelector('[data-account-action]')){const controls=document.createElement('div');controls.dataset.accountAction='true';controls.style='display:flex;gap:7px;margin-top:12px';controls.innerHTML='<button class="small" id="themeToggle" type="button">☾ Dark mode</button><button class="small" id="logoutButton" type="button">Log out</button>';bottom.append(controls);document.getElementById('themeToggle').addEventListener('click',()=>{const light=document.body.dataset.theme==='light';localStorage.setItem(themeKey,light?'dark':'light');applyTheme();document.getElementById('themeToggle').textContent=light?'☀ Light mode':'☾ Dark mode'});document.getElementById('themeToggle').textContent=document.body.dataset.theme==='light'?'☾ Dark mode':'☀ Light mode';document.getElementById('logoutButton').addEventListener('click',()=>{localStorage.removeItem('daymark-profile-alex');window.location.assign('landing.html')})}
+</script>
+<script>
+document.querySelectorAll('[data-view="tasks"]').forEach(item=>item.remove());document.getElementById('tasksView')?.remove();const calendarSubtitle=document.querySelector('#calendarView .drop-hint');if(calendarSubtitle)calendarSubtitle.textContent='Drag goals onto a date.';const unscheduledHeading=document.querySelector('#unscheduled')?.closest('.card')?.querySelector('.subtitle');if(unscheduledHeading)unscheduledHeading.textContent='Drag a goal onto a date.';
+function enhanceGoals(){document.querySelectorAll('#goalList .item[data-drag-id]').forEach(card=>{const goal=goals.find(item=>item.id===card.dataset.dragId);if(!goal)return;card.draggable=goal.enabled!==false;card.querySelector('[data-goal-enable]')?.remove();const button=document.createElement('button');button.className='small';button.dataset.goalEnable=goal.id;button.textContent=goal.enabled===false?'Enable':'Disable';card.querySelector('.actions')?.append(button);card.style.opacity=goal.enabled===false?'.5':''});document.querySelectorAll('#calendar .cal-item.goal').forEach(item=>{const goal=goals.find(entry=>entry.id===item.dataset.dragId);if(goal?.enabled===false)item.remove()});document.querySelectorAll('#unscheduled [data-drag-type="goal"]').forEach(item=>{const goal=goals.find(entry=>entry.id===item.dataset.dragId);if(goal?.enabled===false)item.remove()})}
+const goalRenderer=renderGoals,calendarRenderer=renderCalendar;renderGoals=()=>{goalRenderer();enhanceGoals()};renderCalendar=()=>{calendarRenderer();enhanceGoals()};document.addEventListener('click',event=>{const button=event.target.closest('[data-goal-enable]');if(!button)return;const goal=goals.find(item=>item.id===button.dataset.goalEnable);if(goal){goal.enabled=goal.enabled===false;persist();renderAll();toast(goal.enabled?'Goal enabled.':'Goal disabled.')}});renderAll();
+</script>
+</body>
+<script>
+const tikiProfile={name:'Tiki',username:'Tiki'};localStorage.setItem('daymark-profile-alex',JSON.stringify({...JSON.parse(localStorage.getItem('daymark-profile-alex')||'{}'),...tikiProfile}));document.querySelectorAll('.profile b').forEach(item=>item.textContent='@Tiki');document.querySelectorAll('.avatar').forEach(item=>item.textContent='T');const identityStyle=document.createElement('style');identityStyle.textContent='.nav{gap:8px}.nav button{display:block;min-height:42px;white-space:nowrap}.mini-calendar{grid-template-columns:repeat(7,minmax(28px,1fr));align-items:stretch}.mini-weekday{font-weight:700;padding:6px 2px}.mini-day{min-width:28px;min-height:38px;display:grid;place-items:center}.rhythm-line{align-items:center}.rhythm-line span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media(max-width:520px){.nav{gap:6px}.nav button{min-height:38px}.mini-calendar{gap:3px}.mini-weekday{font-size:10px}.mini-day{min-width:25px;min-height:32px;font-size:11px}}';document.head.append(identityStyle);document.querySelectorAll('.eyebrow').forEach(item=>{if(item.textContent.includes('ALEX MORGAN'))item.textContent='TIKI / PERSONAL SPACE'});const titleElement=document.getElementById('title');if(titleElement&&titleElement.textContent.includes('Alex'))titleElement.textContent='Good morning, Tiki';document.querySelectorAll('button[data-view="tasks"]').forEach(item=>item.remove());document.getElementById('tasksView')?.remove();document.querySelectorAll('[data-view="tasks"]').forEach(item=>item.remove());document.querySelectorAll('#dashboardView h2').forEach(item=>{if(item.textContent.includes('Today'))item.textContent='Daily focus'});const dashboardView=showView;showView=view=>{dashboardView(view);if(view==='dashboard'){document.getElementById('title').textContent='Good morning, Tiki';document.querySelectorAll('.eyebrow').forEach(item=>{if(item.textContent.includes('ALEX'))item.textContent='TIKI / PERSONAL SPACE'})}};const profileInput=document.getElementById('profileName');if(profileInput)profileInput.value='Tiki';renderRhythm();renderDashboard();
+</script>
+<script>
+const dashboardStyle=document.createElement('style');dashboardStyle.textContent='#dashboardView .rhythm-breakdown{display:grid;gap:12px}#dashboardView .rhythm-contributor{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:13px 0;border-bottom:1px solid var(--line)}#dashboardView .rhythm-contributor:last-child{border-bottom:0}#dashboardView .rhythm-contributor strong{font-size:14px}#dashboardView .rhythm-contributor small{color:var(--muted)}#dashboardView .rhythm-status{color:var(--muted);font-size:12px}#dashboardView .rhythm-status.complete{color:var(--green)}#dashboardView .rhythm-action{grid-column:1/-1;justify-self:start;border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:7px;padding:6px 9px;font-size:12px}.dashboard-grid{align-items:stretch}.dashboard-lower{align-items:start}.mini-calendar{grid-template-columns:repeat(7,minmax(34px,1fr));gap:7px}.mini-weekday{font-size:12px;font-weight:700;letter-spacing:.02em}.mini-day{min-height:40px;display:grid;place-items:center}.mini-day.today{outline:2px solid var(--blue);outline-offset:1px}@media(max-width:520px){.mini-calendar{grid-template-columns:repeat(7,minmax(28px,1fr));gap:4px}.mini-weekday{font-size:11px}.mini-day{min-height:34px}}';document.head.append(dashboardStyle);
+const dashboardProfileName='Tiki';document.querySelectorAll('.profile b').forEach(item=>item.textContent='@Tiki');document.querySelectorAll('.avatar').forEach(item=>item.textContent='T');document.querySelectorAll('.eyebrow').forEach(item=>{if(item.textContent.includes('ALEX'))item.textContent='TIKI / PERSONAL SPACE'});if($('title'))$('title').textContent='Good morning, Tiki';document.querySelectorAll('#dashboardView h2').forEach(item=>{if(item.textContent.includes("Today's focus"))item.textContent="Today's plan"});document.querySelectorAll('#dashboardView [data-view="tasks"]').forEach(item=>item.remove());
+function renderDashboardRhythm(){const today=localDayKey();const contributors=goals.filter(goal=>goal.enabled!==false&&goal.rhythm).map(goal=>({id:goal.id,name:goal.title,complete:goal.done,description:`Complete today’s ${goal.title.toLowerCase()} session`,earned:goal.done?100:0}));if(settings.journalRhythm)contributors.push({id:'journal',name:'Journal',complete:journal.some(entry=>localDayKey(new Date(entry.createdAt))===today),description:'Save one valid journal entry today',earned:journal.some(entry=>localDayKey(new Date(entry.createdAt))===today)?100:0});const completed=contributors.filter(item=>item.complete).length,total=contributors.length,percent=total?Math.round(completed/total*100):0;$('rhythmPercent').textContent=`${percent}%`;$('rhythmSummary').textContent=`${percent}%`;$('rhythmCount').textContent=`${completed} of ${total} enabled contributors complete`;$('rhythmRing').style.setProperty('--progress',percent);$('rhythmBreakdown').innerHTML=contributors.length?contributors.map(item=>`<div class="rhythm-contributor"><strong>${esc(item.name)}</strong><strong>${item.earned}%</strong><small>${esc(item.description)}</small><span class="rhythm-status ${item.complete?'complete':''}">${item.complete?'Complete today':'Not complete'}</span>${item.id!=='journal'?`<button class="rhythm-action" data-dashboard-goal="${item.id}">${item.complete?'Mark incomplete':'Complete today'}</button>`:''}</div>`).join(''):'<p class="empty">No enabled contributors. Enable a goal or journaling in Settings to begin.</p>'}
+function renderDashboardPlan(){const today=localDayKey();const scheduledGoals=placements.filter(item=>item.type==='goal'&&item.date===today).map(item=>goals.find(goal=>goal.id===item.itemId)).filter(Boolean);$('dashboardTasks').innerHTML=scheduledGoals.length?scheduledGoals.map(goal=>`<div class="item ${goal.done?'completed':''}"><b>${esc(goal.title)}</b><span class="meta">${goal.done?'Complete':'Scheduled for today'}</span></div>`).join(''):'<p class="empty">No goals scheduled for today.</p>';const activeGoals=goals.filter(goal=>goal.enabled!==false&&!goal.done).slice(0,3);$('dashboardGoals').innerHTML=activeGoals.length?activeGoals.map(goal=>`<div class="item"><b>${esc(goal.title)}</b><span class="meta">${formatDate(goal.deadline)}</span></div>`).join(''):'<p class="empty">No active goals yet.</p>';const year=month.getFullYear(),mon=month.getMonth(),first=new Date(year,mon,1),start=(first.getDay()+6)%7,last=new Date(year,mon+1,0).getDate();$('dashboardDateLabel').textContent=month.toLocaleDateString([], {month:'long',year:'numeric'});let html=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(day=>`<span class="mini-weekday">${day}</span>`).join('');for(let index=0;index<start;index++)html+='<span class="mini-day empty"></span>';for(let day=1;day<=last;day++){const date=`${year}-${String(mon+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`,hasItems=placements.some(item=>item.type==='goal'&&item.date===date),isToday=date===today;html+=`<button class="mini-day ${hasItems?'has-items':''} ${isToday?'today':''}" data-mini-date="${date}">${day}</button>`}$('dashboardCalendar').innerHTML=html;$('dashboardCalendar').querySelectorAll('[data-mini-date]').forEach(button=>button.addEventListener('click',()=>{selectedDate=button.dataset.miniDate;showView('calendar');renderCalendar()}))}
+const originalDashboardRhythm=renderRhythm;renderRhythm=()=>renderDashboardRhythm();const originalDashboardRender=renderDashboard;renderDashboard=()=>renderDashboardPlan();document.addEventListener('click',event=>{const button=event.target.closest('[data-dashboard-goal]');if(!button)return;const goal=goals.find(item=>item.id===button.dataset.dashboardGoal);if(goal){goal.done=!goal.done;persist();renderAll();toast(goal.done?'+10 Daily Rhythm.':'Goal marked incomplete.')}});renderDashboardRhythm();renderDashboardPlan();
+</script>
+<script>
+const settingsView=document.getElementById('settingsView');if(settingsView){settingsView.innerHTML='<div class="settings-stack"><article class="card settings-section"><div class="head"><div><h2>Account</h2><p class="subtitle">Manage your DayMark profile.</p></div></div><div class="settings-grid"><label class="field"><span>Name</span><input id="settingsName" maxlength="60"></label><label class="field"><span>Email</span><input id="settingsEmail" type="email"></label><label class="field"><span>Username</span><input id="settingsUsername" maxlength="30"></label></div><div class="toolbar"><button class="primary" id="saveAccountSettings">Save account</button><button class="secondary" id="viewAccountInfo">View account information</button><button class="secondary" id="settingsSignOut">Sign out</button></div><p class="hint" id="accountInfo"></p><p class="hint">Password changes require a connected account provider and are not available in this local prototype.</p></article><article class="card settings-section"><div class="head"><div><h2>Appearance</h2><p class="subtitle">Choose how DayMark looks.</p></div></div><div class="settings-choice-row"><button class="secondary" data-theme-choice="light">Light mode</button><button class="secondary" data-theme-choice="dark">Dark mode</button><button class="secondary" data-theme-choice="system">System mode</button></div></article><article class="card settings-section"><div class="head"><div><h2>Daily Rhythm</h2><p class="subtitle">Choose what contributes to your score.</p></div></div><div id="rhythmSettingsGoals"></div><label class="setting"><span>Tasks contribute<p>Existing task records can still be included in scoring.</p></span><span class="toggle"><input id="settingsTasksRhythm" type="checkbox"><span class="slider"></span></span></label><label class="setting"><span>Habits contribute<p>Habit tracking is ready to connect when habits are added.</p></span><span class="toggle"><input id="settingsHabitsRhythm" type="checkbox"><span class="slider"></span></span></label><label class="setting"><span>Journaling contributes<p>One valid saved entry per day counts once.</p></span><span class="toggle"><input id="journalRhythm" type="checkbox"><span class="slider"></span></span></label><div class="settings-grid"><label class="field"><span>Daily journal entries required</span><input id="journalRequirement" type="number" min="1" max="10"></label><label class="field"><span>Streak percentage required</span><input id="streakThreshold" type="number" min="1" max="100"></label></div><label class="setting"><span>Track waking up on time<p>Requires an alarm or wake-time integration.</p></span><span class="toggle"><input id="wakeTracking" type="checkbox"><span class="slider"></span></span></label></article><article class="card settings-section"><div class="head"><div><h2>Privacy</h2><p class="subtitle">Control how private content is used.</p></div></div><label class="setting"><span>Allow AI access to journal entries<p>Disabled by default. AI does not respond automatically to entries.</p></span><span class="toggle"><input id="aiJournalAccess" type="checkbox"><span class="slider"></span></span></label><p class="privacy-copy">Journal entries remain stored in this browser. AI access is only a permission setting and does not send data anywhere in this prototype.</p></article><article class="card settings-section"><div class="head"><div><h2>Notifications</h2><p class="subtitle">Control reminders and browser permission.</p></div></div><label class="setting"><span>Alarm notifications</span><span class="toggle"><input id="alarmNotifications" type="checkbox"><span class="slider"></span></span></label><label class="setting"><span>Reminder notifications</span><span class="toggle"><input id="reminderNotifications" type="checkbox"><span class="slider"></span></span></label><div class="toolbar"><button class="secondary" id="requestNotifications">Request notification permission</button><span class="hint" id="notificationStatus"></span></div></article><article class="card settings-section"><div class="head"><div><h2>Data</h2><p class="subtitle">Export or remove your local DayMark data.</p></div></div><div class="toolbar"><button class="secondary" id="exportData">Export data</button><button class="danger" id="deleteJournalData">Delete journal entries</button><button class="danger" id="deletePlanningData">Delete goals and tasks</button><button class="danger" id="deleteAccountData">Delete account</button></div></article></div>';
+const profileData=JSON.parse(localStorage.getItem('daymark-profile-alex')||'{}');$('settingsName').value=profileData.name||'Tiki';$('settingsEmail').value=profileData.email||'';$('settingsUsername').value=profileData.username||'Tiki';$('settingsTasksRhythm').checked=settings.tasksRhythm!==false;$('settingsHabitsRhythm').checked=settings.habitsRhythm===true;$('journalRhythm').checked=settings.journalRhythm===true;$('journalRequirement').value=settings.journalRequirement||1;$('streakThreshold').value=settings.streakThreshold||50;$('wakeTracking').checked=settings.wakeTracking===true;$('aiJournalAccess').checked=settings.aiJournalAccess===true;$('alarmNotifications').checked=settings.alarmNotifications!==false;$('reminderNotifications').checked=settings.reminderNotifications!==false;
+function saveSettings(){settings.tasksRhythm=$('settingsTasksRhythm').checked;settings.habitsRhythm=$('settingsHabitsRhythm').checked;settings.journalRhythm=$('journalRhythm').checked;settings.journalRequirement=Math.max(1,Number($('journalRequirement').value)||1);settings.streakThreshold=Math.min(100,Math.max(1,Number($('streakThreshold').value)||50));settings.wakeTracking=$('wakeTracking').checked;settings.aiJournalAccess=$('aiJournalAccess').checked;settings.alarmNotifications=$('alarmNotifications').checked;settings.reminderNotifications=$('reminderNotifications').checked;persist();renderRhythm()}
+function renderGoalSettings(){const container=$('rhythmSettingsGoals');container.innerHTML=goals.length?'<p class="settings-label">Goals that count</p>'+goals.map(goal=>`<label class="setting"><span>${esc(goal.title)}</span><span class="toggle"><input type="checkbox" data-rhythm-goal="${goal.id}" ${goal.rhythm?'checked':''}><span class="slider"></span></span></label>`).join(''):'<p class="hint">Create a goal to choose it as a contributor.</p>'}renderGoalSettings();document.querySelectorAll('#settingsView input').forEach(input=>input.addEventListener('change',()=>{if(input.dataset.rhythmGoal){const goal=goals.find(item=>item.id===input.dataset.rhythmGoal);if(goal)goal.rhythm=input.checked}saveSettings()}));$('saveAccountSettings').onclick=()=>{const updated={...profileData,name:$('settingsName').value.trim()||'Tiki',email:$('settingsEmail').value.trim(),username:$('settingsUsername').value.trim()||'Tiki'};localStorage.setItem('daymark-profile-alex',JSON.stringify(updated));document.querySelectorAll('.profile b').forEach(item=>item.textContent=`@${updated.username}`);toast('Account information saved.')};$('viewAccountInfo').onclick=()=>{$('accountInfo').textContent=`${$('settingsName').value} · @${$('settingsUsername').value} · ${$('settingsEmail').value||'No email saved'}`};$('settingsSignOut').onclick=()=>{localStorage.removeItem('daymark-profile-alex');window.location.assign('landing.html')};document.querySelectorAll('[data-theme-choice]').forEach(button=>button.onclick=()=>{const choice=button.dataset.themeChoice;localStorage.setItem('daymark-theme-alex',choice);document.body.dataset.theme=choice==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):choice;toast(`${choice[0].toUpperCase()+choice.slice(1)} mode enabled.`)});$('requestNotifications').onclick=async()=>{if(!('Notification'in window)){$('notificationStatus').textContent='Not supported in this browser.';return}const permission=await Notification.requestPermission();$('notificationStatus').textContent=`Permission: ${permission}`};$('exportData').onclick=()=>{const data={profile:profileData,goals,tasks,journal,placements,settings};const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));link.download='daymark-data.json';link.click();URL.revokeObjectURL(link.href)};$('deleteJournalData').onclick=()=>{if(confirm('Delete all journal entries?')){journal=[];persist();renderAll();toast('Journal entries deleted.')}};$('deletePlanningData').onclick=()=>{if(confirm('Delete all goals and tasks?')){goals=[];tasks=[];placements=[];persist();renderAll();renderGoalSettings();toast('Goals and tasks deleted.')}};$('deleteAccountData').onclick=()=>{if(confirm('Delete your DayMark account and all local data?')){Object.values(KEYS).forEach(key=>localStorage.removeItem(key));localStorage.removeItem('daymark-profile-alex');window.location.assign('landing.html')}}}
+</script>
+<script>
+const settingsStyle=document.createElement('style');settingsStyle.textContent=`.settings-stack{display:grid;gap:18px;max-width:900px}.settings-section h2{text-transform:uppercase;letter-spacing:.08em;font-size:14px}.settings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0}.settings-grid .field span,.settings-label{color:var(--muted);font-size:12px;font-weight:700}.settings-choice-row{display:flex;gap:10px;flex-wrap:wrap}.privacy-copy{color:var(--muted);font-size:12px;line-height:1.5;border-left:3px solid var(--blue);padding-left:12px}@media(max-width:600px){.settings-grid{grid-template-columns:1fr}.settings-choice-row button{flex:1}}`;document.head.append(settingsStyle);
+</script>
+<script>
+const dashboardFinalStyle=document.createElement('style');dashboardFinalStyle.textContent='#dashboardView .rhythm-card{grid-column:auto;min-height:390px;padding:28px}.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.85fr);gap:24px;align-items:start}.dashboard-grid>*{min-width:0}.dashboard-lower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:24px}.dashboard-lower>*{min-width:0}.rhythm-card .rhythm-breakdown{max-height:275px;overflow:auto;padding-right:8px}.rhythm-contributor{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px!important}.rhythm-action{min-height:34px;cursor:pointer}.mini-calendar-card{min-width:0}.mini-calendar{width:100%;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.mini-weekday{text-align:center;white-space:nowrap}.mini-day{width:100%;min-height:42px}.mini-day.has-items{box-shadow:inset 0 -3px var(--green)}#dashboardView .mood-card{grid-column:1/-1;width:100%;margin-top:24px}#dashboardView .home-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;width:100%;margin-top:24px}#dashboardView .home-summary>*{min-width:0}@media(max-width:850px){.dashboard-grid,.dashboard-lower{grid-template-columns:minmax(0,1fr)}#dashboardView .rhythm-card{grid-column:auto}}@media(max-width:520px){#dashboardView .rhythm-card{padding:18px}.mini-calendar{gap:4px}.mini-day{min-height:36px}.mini-weekday{font-size:10px}#dashboardView .home-summary{grid-template-columns:1fr}}';document.head.append(dashboardFinalStyle);const todayKey=()=>localDayKey();function dailyGoalContributors(){const today=todayKey();return goals.filter(goal=>goal.enabled!==false&&goal.rhythm&&placements.some(item=>item.type==='goal'&&item.itemId===goal.id&&item.date===today)).map(goal=>({id:goal.id,name:goal.title,description:`Complete today’s ${goal.title.toLowerCase()} session`,complete:goal.completedOn===today||goal.done}))}function renderDashboardRhythm(){const today=todayKey(),contributors=dailyGoalContributors();if(settings.journalRhythm)contributors.push({id:'journal',name:'Journal',description:'Save one valid journal entry today',complete:journal.some(entry=>localDayKey(new Date(entry.createdAt))===today)});const completed=contributors.filter(item=>item.complete).length,total=contributors.length,percent=total?Math.min(100,Math.round(completed/total*100)):0;$('rhythmPercent').textContent=`${percent}%`;$('rhythmSummary').textContent=`${percent}% complete`;$('rhythmCount').textContent=`${completed} of ${total} enabled contributors complete`;$('rhythmRing').style.setProperty('--progress',percent);$('rhythmBreakdown').innerHTML=contributors.length?contributors.map(item=>`<div class="rhythm-contributor"><strong>${esc(item.name)}</strong><strong>${item.complete?'100%':'0%'}</strong><small>${esc(item.description)}</small><span class="rhythm-status ${item.complete?'complete':''}">${item.complete?'Completed ✓':'Not complete'}</span>${item.id!=='journal'?`<button class="rhythm-action" data-dashboard-goal="${item.id}">${item.complete?'Mark incomplete':'Complete today'}</button>`:''}</div>`).join(''):'<p class="empty"><strong>No contributors enabled</strong><br>Enable habits, goals, or journaling in Settings to begin tracking your Daily Rhythm.</p>'}function renderDashboardPlan(){const today=todayKey(),scheduledGoals=placements.filter(item=>item.type==='goal'&&item.date===today).map(item=>goals.find(goal=>goal.id===item.itemId)).filter(goal=>goal&&goal.enabled!==false);$('dashboardTasks').innerHTML=scheduledGoals.length?scheduledGoals.map(goal=>`<div class="item ${goal.completedOn===today||goal.done?'completed':''}"><b>${esc(goal.title)}</b><span class="meta">${goal.completedOn===today||goal.done?'Completed today ✓':'Scheduled for today'}</span></div>`).join(''):'<p class="empty">No goals scheduled for today.</p>';const activeGoals=goals.filter(goal=>goal.enabled!==false&&!goal.done).slice(0,3);$('dashboardGoals').innerHTML=activeGoals.length?activeGoals.map(goal=>`<div class="item"><b>${esc(goal.title)}</b><span class="meta">${esc(goal.description||'No description')} · ${formatDate(goal.deadline)} · ${goal.priority}</span><span class="chip">${placement('goal',goal.id)?'Scheduled':'Not scheduled'}</span></div>`).join(''):'<p class="empty">No active goals yet.</p>';const year=month.getFullYear(),mon=month.getMonth(),first=new Date(year,mon,1),start=(first.getDay()+6)%7,last=new Date(year,mon+1,0).getDate();$('dashboardDateLabel').textContent=month.toLocaleDateString([], {month:'long',year:'numeric'});let html=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(day=>`<span class="mini-weekday">${day}</span>`).join('');for(let index=0;index<start;index++)html+='<span class="mini-day empty"></span>';for(let day=1;day<=last;day++){const date=`${year}-${String(mon+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`,hasItems=placements.some(item=>item.type==='goal'&&item.date===date),isToday=date===today;html+=`<button class="mini-day ${hasItems?'has-items':''} ${isToday?'today':''}" data-mini-date="${date}">${day}</button>`}$('dashboardCalendar').innerHTML=html;$('dashboardCalendar').querySelectorAll('[data-mini-date]').forEach(button=>button.addEventListener('click',()=>{selectedDate=button.dataset.miniDate;showView('calendar');renderCalendar()}))}
+document.querySelectorAll('#dashboardView [data-view="tasks"]').forEach(item=>item.remove());document.querySelectorAll('#dashboardView h2').forEach(item=>{if(item.textContent.includes('Today'))item.textContent="Today's plan"});const previousDashboardGoalClick=document.querySelector('body');document.addEventListener('click',event=>{const button=event.target.closest('[data-dashboard-goal]');if(!button)return;const goal=goals.find(item=>item.id===button.dataset.dashboardGoal);if(goal){goal.completedOn=goal.completedOn===todayKey()?null:todayKey();persist();renderAll();toast(goal.completedOn?'+10 Daily Rhythm.':'Goal marked incomplete.')}});renderRhythm=renderDashboardRhythm;renderDashboard=renderDashboardPlan;renderRhythm();renderDashboardPlan();
+</script>
+<script>
+const rhythmEmptyStyle=document.createElement('style');rhythmEmptyStyle.textContent='#dashboardView .rhythm-empty{min-height:390px;display:grid;place-items:center;text-align:center;padding:34px}.rhythm-empty-inner{max-width:430px}.rhythm-empty h2{font-size:25px;margin:0 0 10px}.rhythm-empty p{color:var(--muted);line-height:1.55}.rhythm-setup-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}.rhythm-setup-actions button{min-height:40px}#dashboardView .rhythm-card .rhythm-ring{position:relative;flex:none;margin-bottom:30px}#dashboardView .rhythm-card .rhythm-ring>div{position:static}#dashboardView .rhythm-card .rhythm-ring .rhythm-percent{position:relative;z-index:2}#dashboardView .rhythm-card .rhythm-ring .hint{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:max-content;white-space:nowrap;z-index:2}@media(max-width:850px){#dashboardView .rhythm-empty{min-height:260px}}';document.head.append(rhythmEmptyStyle);
+function dashboardAlarmRecords(){try{return JSON.parse(localStorage.getItem('daymark-alarms-alex-morgan')||'[]')}catch(error){return[]}}function dashboardHabitRecords(){try{return JSON.parse(localStorage.getItem('daymark-habits-alex')||'[]')}catch(error){return[]}}function rhythmDailyContributors(){const today=todayKey(),contributors=[];goals.filter(goal=>goal.enabled!==false&&goal.rhythm&&placements.some(item=>item.type==='goal'&&item.itemId===goal.id&&item.date===today)).forEach(goal=>contributors.push({id:`goal:${goal.id}`,name:goal.title,description:`Complete today’s ${goal.title.toLowerCase()} session`,complete:goal.completedOn===today||goal.done,type:'goal'}));dashboardHabitRecords().filter(habit=>habit.enabled!==false).forEach(habit=>contributors.push({id:`habit:${habit.id}`,name:habit.name||habit.title,description:'Complete today’s habit',complete:habit.completedOn===today||habit.completed===today,type:'habit'}));dashboardAlarmRecords().filter(alarm=>alarm.enabled!==false).forEach(alarm=>{const completion=settings.alarmCompletionDates?.[alarm.id];contributors.push({id:`alarm:${alarm.id}`,name:alarm.name||'Reminder',description:`Complete ${alarm.name||'this reminder'} today`,complete:completion===today,type:'alarm'})});if(settings.journalRhythm)contributors.push({id:'journal',name:'Journal',description:'Save one valid journal entry today',complete:journal.some(entry=>localDayKey(new Date(entry.createdAt))===today),type:'journal'});return contributors}
+function renderDashboardRhythm(){const contributors=rhythmDailyContributors(),rhythmCard=document.querySelector('#dashboardView .rhythm-card'),calendarCard=document.querySelector('#dashboardView .mini-calendar-card');let emptyCard=document.getElementById('rhythmEmpty');if(!contributors.length){if(rhythmCard)rhythmCard.hidden=true;if(!emptyCard){emptyCard=document.createElement('article');emptyCard.id='rhythmEmpty';emptyCard.className='card rhythm-empty';emptyCard.innerHTML='<div class="rhythm-empty-inner"><h2>Start your Daily Rhythm</h2><p>Set up goals, habits, or reminders to begin tracking your day.</p><div class="rhythm-setup-actions"><button class="primary" data-rhythm-setup="goals">Set up Goals</button><button class="secondary" data-rhythm-setup="habits">Set up Habits</button><button class="secondary" data-rhythm-setup="alarms">Set up Alarms</button></div></div>';calendarCard?.before(emptyCard)}}else{if(rhythmCard)rhythmCard.hidden=false;emptyCard?.remove();const completed=contributors.filter(item=>item.complete).length,total=contributors.length,percent=Math.min(100,Math.round(completed/total*100));$('rhythmPercent').textContent=`${percent}%`;$('rhythmSummary').textContent=`${percent}% complete`;$('rhythmCount').textContent=`${completed} of ${total} enabled contributors complete`;$('rhythmRing').style.setProperty('--progress',percent);$('rhythmBreakdown').innerHTML=contributors.map(item=>`<div class="rhythm-contributor"><strong>${esc(item.name)}</strong><strong>${item.complete?'100%':'0%'}</strong><small>${esc(item.description)}</small><span class="rhythm-status ${item.complete?'complete':''}">${item.complete?'Completed ✓':'Not complete'}</span>${item.type!=='journal'?`<button class="rhythm-action" data-dashboard-contributor="${esc(item.id)}">${item.complete?'Mark incomplete':'Complete today'}</button>`:''}</div>`).join('')}}
+document.addEventListener('click',event=>{const setup=event.target.closest('[data-rhythm-setup]');if(setup){if(setup.dataset.rhythmSetup==='alarms')window.location.assign('<!doctype html>.html');else showView(setup.dataset.rhythmSetup);return}const action=event.target.closest('[data-dashboard-contributor]');if(!action)return;const [type,itemId]=action.dataset.dashboardContributor.split(':');const today=todayKey();if(type==='goal'){const goal=goals.find(item=>item.id===itemId);if(goal)goal.completedOn=goal.completedOn===today?null:today}else if(type==='habit'){const habits=dashboardHabitRecords(),habit=habits.find(item=>String(item.id)===itemId);if(habit){habit.completedOn=habit.completedOn===today?null:today;localStorage.setItem('daymark-habits-alex',JSON.stringify(habits))}}else if(type==='alarm'){settings.alarmCompletionDates={...(settings.alarmCompletionDates||{}),[itemId]:settings.alarmCompletionDates?.[itemId]===today?'':today};persist()}persist();renderAll();toast('Daily Rhythm updated.')});renderRhythm=renderDashboardRhythm;renderDashboardRhythm();
+</script>
+<script>
+const journalTrackingEnabled=()=>settings.journalRhythm===true&&settings.journalRhythmExplicit===true;function dashboardSetupContributors(){const today=todayKey(),contributors=[];goals.filter(goal=>goal.enabled!==false&&goal.rhythm&&placements.some(item=>item.type==='goal'&&item.itemId===goal.id&&item.date===today)).forEach(goal=>contributors.push({id:`goal:${goal.id}`,name:goal.title,description:`Complete today’s ${goal.title.toLowerCase()} session`,complete:goal.completedOn===today||goal.done,type:'goal'}));dashboardHabitRecords().filter(habit=>habit.enabled!==false).forEach(habit=>contributors.push({id:`habit:${habit.id}`,name:habit.name||habit.title,description:'Complete today’s habit',complete:habit.completedOn===today||habit.completed===today,type:'habit'}));dashboardAlarmRecords().filter(alarm=>alarm.enabled!==false).forEach(alarm=>contributors.push({id:`alarm:${alarm.id}`,name:alarm.name||'Reminder',description:`Complete ${alarm.name||'this reminder'} today`,complete:settings.alarmCompletionDates?.[alarm.id]===today,type:'alarm'}));if(journalTrackingEnabled())contributors.push({id:'journal',name:'Journal',description:'Save one valid journal entry today',complete:journal.some(entry=>localDayKey(new Date(entry.createdAt))===today),type:'journal'});return contributors}
+function renderDashboardRhythm(){const contributors=dashboardSetupContributors(),rhythmCard=document.querySelector('#dashboardView .rhythm-card'),calendarCard=document.querySelector('#dashboardView .mini-calendar-card');let emptyCard=document.getElementById('rhythmEmpty');if(!contributors.length){if(rhythmCard)rhythmCard.hidden=true;if(!emptyCard){emptyCard=document.createElement('article');emptyCard.id='rhythmEmpty';emptyCard.className='card rhythm-empty';emptyCard.innerHTML='<div class="rhythm-empty-inner"><h2>Start your Daily Rhythm</h2><p>Set up goals, habits, or reminders to begin tracking your day.</p><div class="rhythm-setup-actions"><button class="primary" data-rhythm-setup="goals">Set up Goals</button><button class="secondary" data-rhythm-setup="habits">Set up Habits</button><button class="secondary" data-rhythm-setup="alarms">Set up Alarms</button></div></div>';calendarCard?.before(emptyCard)}}else{if(rhythmCard)rhythmCard.hidden=false;emptyCard?.remove();const completed=contributors.filter(item=>item.complete).length,total=contributors.length,percent=Math.min(100,Math.round(completed/total*100));$('rhythmPercent').textContent=`${percent}%`;$('rhythmSummary').textContent=`${percent}% complete`;$('rhythmCount').textContent=`${completed} of ${total} enabled contributors complete`;$('rhythmRing').style.setProperty('--progress',percent);$('rhythmBreakdown').innerHTML=contributors.map(item=>`<div class="rhythm-contributor"><strong>${esc(item.name)}</strong><strong>${item.complete?'100%':'0%'}</strong><small>${esc(item.description)}</small><span class="rhythm-status ${item.complete?'complete':''}">${item.complete?'Completed ✓':'Not complete'}</span>${item.id!=='journal'?`<button class="rhythm-action" data-dashboard-contributor="${esc(item.id)}">${item.complete?'Mark incomplete':'Complete today'}</button>`:''}</div>`).join('')}}
+renderRhythm=renderDashboardRhythm;const journalSetting=document.getElementById('journalRhythm');if(journalSetting)journalSetting.addEventListener('change',()=>{settings.journalRhythmExplicit=true;persist();renderDashboardRhythm()});renderDashboardRhythm();
+</script>
+<script>
+function dashboardSetupContributors(){const today=todayKey(),contributors=[];goals.filter(goal=>goal.enabled!==false&&goal.rhythm!==false).forEach(goal=>contributors.push({id:`goal:${goal.id}`,name:goal.title,description:`Complete today’s ${goal.title.toLowerCase()} session`,complete:goal.completedOn===today||goal.done,type:'goal'}));dashboardHabitRecords().filter(habit=>habit.enabled!==false).forEach(habit=>contributors.push({id:`habit:${habit.id}`,name:habit.name||habit.title,description:'Complete today’s habit',complete:habit.completedOn===today||habit.completed===today,type:'habit'}));dashboardAlarmRecords().filter(alarm=>alarm.enabled!==false).forEach(alarm=>contributors.push({id:`alarm:${alarm.id}`,name:alarm.name||'Reminder',description:`Complete ${alarm.name||'this reminder'} today`,complete:settings.alarmCompletionDates?.[alarm.id]===today,type:'alarm'}));if(journalTrackingEnabled())contributors.push({id:'journal',name:'Journal',description:'Save one valid journal entry today',complete:journal.some(entry=>localDayKey(new Date(entry.createdAt))===today),type:'journal'});return contributors}renderDashboardRhythm();
+</script>
+<script>
+function dashboardSetupContributors(){const today=todayKey(),contributors=[];goals.filter(goal=>goal.enabled!==false&&goal.rhythm===true).forEach(goal=>contributors.push({id:`goal:${goal.id}`,name:goal.title,description:`Complete today’s ${goal.title.toLowerCase()} session`,complete:goal.completedOn===today||goal.done,type:'goal'}));dashboardHabitRecords().filter(habit=>habit.enabled===true).forEach(habit=>contributors.push({id:`habit:${habit.id}`,name:habit.name||habit.title,description:'Complete today’s habit',complete:habit.completedOn===today||habit.completed===today,type:'habit'}));dashboardAlarmRecords().filter(alarm=>alarm.enabled===true).forEach(alarm=>contributors.push({id:`alarm:${alarm.id}`,name:alarm.name||'Reminder',description:`Complete ${alarm.name||'this reminder'} today`,complete:settings.alarmCompletionDates?.[alarm.id]===today,type:'alarm'}));if(journalTrackingEnabled())contributors.push({id:'journal',name:'Journal',description:'Save one valid journal entry today',complete:journal.some(entry=>localDayKey(new Date(entry.createdAt))===today),type:'journal'});return contributors}renderDashboardRhythm();
+</script>
+<script>
+function dashboardSetupContributors(){const today=todayKey(),contributors=[];goals.filter(goal=>goal.enabled!==false&&goal.rhythm===true&&goal.rhythmExplicit===true).forEach(goal=>contributors.push({id:`goal:${goal.id}`,name:goal.title,description:`Complete today’s ${goal.title.toLowerCase()} session`,complete:goal.completedOn===today||goal.done,type:'goal'}));dashboardHabitRecords().filter(habit=>habit.enabled===true).forEach(habit=>contributors.push({id:`habit:${habit.id}`,name:habit.name||habit.title,description:'Complete today’s habit',complete:habit.completedOn===today||habit.completed===today,type:'habit'}));dashboardAlarmRecords().filter(alarm=>alarm.enabled===true).forEach(alarm=>contributors.push({id:`alarm:${alarm.id}`,name:alarm.name||'Reminder',description:`Complete ${alarm.name||'this reminder'} today`,complete:settings.alarmCompletionDates?.[alarm.id]===today,type:'alarm'}));if(journalTrackingEnabled())contributors.push({id:'journal',name:'Journal',description:'Save one valid journal entry today',complete:journal.some(entry=>localDayKey(new Date(entry.createdAt))===today),type:'journal'});return contributors}const goalForm=document.getElementById('goalForm');if(goalForm)goalForm.addEventListener('submit',()=>setTimeout(()=>{const title=document.getElementById('goalTitle').value.trim(),goal=goals.find(item=>item.title===title);if(goal){goal.rhythmExplicit=true;persist();renderDashboardRhythm()}},0));document.addEventListener('change',event=>{const input=event.target.closest('[data-rhythm-goal]');if(input){const goal=goals.find(item=>item.id===input.dataset.rhythmGoal);if(goal){goal.rhythmExplicit=true;persist();renderDashboardRhythm()}}});renderDashboardRhythm();
+</script>
+<script>
+document.addEventListener('click',event=>{const action=event.target.closest('[data-dashboard-contributor]');if(!action||!action.dataset.dashboardContributor.startsWith('goal:'))return;event.preventDefault();event.stopImmediatePropagation();const goalId=action.dataset.dashboardContributor.slice(5),goal=goals.find(item=>String(item.id)===goalId);if(!goal)return;const today=todayKey();const wasComplete=goal.completedOn===today||goal.done;if(wasComplete){goal.completedOn=null;goal.done=false}else{goal.completedOn=today;goal.done=false}persist();renderAll();toast(wasComplete?'Goal marked incomplete.':'+10 Daily Rhythm.')},true);
+</script>
+<script>
+function recalculateDailyRhythm(){const contributors=dashboardSetupContributors(),completed=contributors.filter(item=>item.complete).length,total=contributors.length,percent=total?Math.min(100,Math.round(completed/total*100)):0;if($('rhythmPercent'))$('rhythmPercent').textContent=`${percent}%`;if($('rhythmSummary'))$('rhythmSummary').textContent=`${percent}% complete`;if($('rhythmCount'))$('rhythmCount').textContent=`${completed} of ${total} enabled contributors complete`;if($('rhythmRing'))$('rhythmRing').style.setProperty('--progress',percent);if($('rhythmBreakdown'))$('rhythmBreakdown').innerHTML=contributors.length?contributors.map(item=>`<div class="rhythm-contributor"><strong>${esc(item.name)}</strong><strong>${item.complete?'100%':'0%'}</strong><small>${esc(item.description)}</small><span class="rhythm-status ${item.complete?'complete':''}">${item.complete?'Completed ✓':'Not complete'}</span>${item.id!=='journal'?`<button class="rhythm-action" data-dashboard-contributor="${esc(item.id)}">${item.complete?'Mark incomplete':'Complete today'}</button>`:''}</div>`).join(''):'<p class="empty"><strong>No contributors enabled</strong><br>Enable goals, habits, alarms, or journaling in Settings to begin.</p>'}
+const originalDashboardPersist=persist;persist=()=>{originalDashboardPersist();recalculateDailyRhythm()};const goalFormForRhythm=document.getElementById('goalForm');if(goalFormForRhythm)goalFormForRhythm.addEventListener('submit',()=>setTimeout(()=>{const title=document.getElementById('goalTitle').value.trim(),goal=goals.find(item=>item.title===title);if(goal){goal.rhythmExplicit=true;persist()}recalculateDailyRhythm()},0));document.addEventListener('change',event=>{const goalToggle=event.target.closest('[data-goal-enable]');if(goalToggle)setTimeout(recalculateDailyRhythm,0)});recalculateDailyRhythm();
+</script>
+<script>
+function dashboardSetupContributors(){const today=todayKey(),contributors=goals.filter(goal=>goal.enabled!==false).map(goal=>({id:`goal:${goal.id}`,name:goal.title,description:`Complete today’s ${goal.title.toLowerCase()} session`,complete:goal.completedOn===today,type:'goal'}));dashboardHabitRecords().filter(habit=>habit.enabled===true).forEach(habit=>contributors.push({id:`habit:${habit.id}`,name:habit.name||habit.title,description:'Complete today’s habit',complete:habit.completedOn===today||habit.completed===today,type:'habit'}));dashboardAlarmRecords().filter(alarm=>alarm.enabled===true).forEach(alarm=>contributors.push({id:`alarm:${alarm.id}`,name:alarm.name||'Reminder',description:`Complete ${alarm.name||'this reminder'} today`,complete:settings.alarmCompletionDates?.[alarm.id]===today,type:'alarm'}));if(settings.journalRhythm===true)contributors.push({id:'journal',name:'Journal',description:'Save one valid journal entry today',complete:journal.some(entry=>entry.title?.trim()&&entry.body?.trim()&&localDayKey(new Date(entry.createdAt))===today),type:'journal'});return contributors}function recalculateDailyRhythm(){const contributors=dashboardSetupContributors(),completed=contributors.filter(item=>item.complete).length,total=contributors.length,percent=total?Math.min(100,Math.round(completed/total*100)):0;const rhythmCard=document.querySelector('#dashboardView .rhythm-card'),calendarCard=document.querySelector('#dashboardView .mini-calendar-card');let emptyCard=document.getElementById('rhythmEmpty');if(!contributors.length){if(rhythmCard)rhythmCard.hidden=true;if(!emptyCard){emptyCard=document.createElement('article');emptyCard.id='rhythmEmpty';emptyCard.className='card rhythm-empty';emptyCard.innerHTML='<div class="rhythm-empty-inner"><h2>Start your Daily Rhythm</h2><p>Set up goals, habits, or reminders to begin tracking your day.</p><div class="rhythm-setup-actions"><button class="primary" data-rhythm-setup="goals">Set up Goals</button><button class="secondary" data-rhythm-setup="habits">Set up Habits</button><button class="secondary" data-rhythm-setup="alarms">Set up Alarms</button></div></div>';calendarCard?.before(emptyCard)}}else{if(rhythmCard)rhythmCard.hidden=false;emptyCard?.remove();$('rhythmPercent').textContent=`${percent}%`;$('rhythmSummary').textContent=`${percent}% complete`;$('rhythmCount').textContent=`${completed} of ${total} enabled contributors complete`;$('rhythmRing').style.setProperty('--progress',percent);$('rhythmBreakdown').innerHTML=contributors.map(item=>`<div class="rhythm-contributor"><strong>${esc(item.name)}</strong><strong>${item.complete?'100%':'0%'}</strong><small>${esc(item.description)}</small><span class="rhythm-status ${item.complete?'complete':''}">${item.complete?'Completed ✓':'Not complete'}</span>${item.type!=='journal'?`<button class="rhythm-action" data-dashboard-contributor="${esc(item.id)}">${item.complete?'Mark incomplete':'Complete today'}</button>`:''}</div>`).join('')}}dashboardSetupContributors=dashboardSetupContributors;renderRhythm=recalculateDailyRhythm;recalculateDailyRhythm();
+</script>
+<script>
+const finalJournalSetting=document.getElementById('journalRhythm');if(finalJournalSetting)finalJournalSetting.addEventListener('change',()=>{settings.journalRhythm=finalJournalSetting.checked;settings.journalRhythmExplicit=true;persist();recalculateDailyRhythm()});
+</script>
+<script>
+document.querySelectorAll('[data-view="alarms"]').forEach(item=>item.remove());document.querySelectorAll('[data-rhythm-setup="alarms"]').forEach(item=>item.remove());
+const dashboardContributorSource=dashboardSetupContributors;dashboardSetupContributors=()=>dashboardContributorSource().filter(item=>item.type!=='alarm');
+document.addEventListener('click',event=>{const button=event.target.closest('[data-goal-done]');if(!button)return;event.preventDefault();event.stopImmediatePropagation();const goal=goals.find(item=>String(item.id)===button.dataset.goalDone);if(!goal)return;const today=todayKey();const completed=goal.completedOn===today;goal.completedOn=completed?null:today;goal.done=!completed;persist();renderAll();toast(completed?'Goal marked incomplete.':'+10 Daily Rhythm.')},true);
+if(typeof recalculateDailyRhythm==='function')recalculateDailyRhythm();
+</script>
+<script>
+const calendarDashboardStyle=document.createElement('style');calendarDashboardStyle.textContent='#calendarView .calendar-shell{display:grid;gap:18px}.calendar-view-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.calendar-view-grid .weekday{min-width:0;text-align:center;font-weight:700;padding:8px 4px}.calendar-view-grid .day{min-width:0;min-height:132px;padding:9px;overflow:hidden}.calendar-view-grid .day-number{display:flex;justify-content:space-between;align-items:center}.calendar-view-grid .day.today .day-number{color:var(--blue)}.calendar-view-grid .day.selected{outline:2px solid var(--blue);outline-offset:-2px}.calendar-view-grid .cal-item{display:block;width:100%;text-align:left;border:0;cursor:grab}.calendar-view-grid .cal-item.goal{background:#26315b;color:#cbd5ff}.calendar-view-grid .cal-item.task{background:#123a2a;color:#a7f3c5}.calendar-day-editor{display:grid;grid-template-columns:1fr 1.4fr;gap:18px}.calendar-day-editor .item{min-width:0}.calendar-placement-list{display:grid;gap:8px}.calendar-placement-list .item{display:grid;grid-template-columns:1fr auto;align-items:center}.calendar-drop-zone{border:1px dashed #37649b;border-radius:10px;padding:12px;color:var(--muted);text-align:center}.calendar-drop-zone.drag-over{background:var(--soft);color:var(--text)}@media(max-width:850px){.calendar-day-editor{grid-template-columns:1fr}}@media(max-width:560px){.calendar-view-grid{gap:3px}.calendar-view-grid .weekday{font-size:10px;padding:5px 1px}.calendar-view-grid .day{min-height:84px;padding:5px}.calendar-view-grid .cal-item{font-size:10px;padding:4px 3px}.calendar-view-grid .day-number{font-size:12px}}';document.head.append(calendarDashboardStyle);
+function renderCalendarDashboardStyle(){const year=month.getFullYear(),mon=month.getMonth(),first=new Date(year,mon,1),start=(first.getDay()+6)%7,last=new Date(year,mon+1,0).getDate(),today=todayKey();$('monthTitle').textContent=month.toLocaleDateString([], {month:'long',year:'numeric'});let html=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(day=>`<div class="weekday">${day}</div>`).join('');for(let index=0;index<start;index++)html+='<div class="day other"></div>';for(let day=1;day<=last;day++){const date=`${year}-${String(mon+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`,dayPlacements=placements.filter(item=>item.date===date),items=dayPlacements.map(item=>{const record=item.type==='goal'?goals.find(goal=>goal.id===item.itemId):tasks.find(task=>task.id===item.itemId);return record?`<button class="cal-item ${item.type} ${record.done?'completed':''}" draggable="true" data-calendar-drag="${item.type}:${record.id}" title="Drag to reschedule">${item.time?esc(item.time)+' · ':''}${esc(record.title)}</button>`:''}).join('');html+=`<div class="day ${date===today?'today':''} ${date===selectedDate?'selected':''}" data-calendar-date="${date}" data-calendar-drop="${date}"><div class="day-number"><span>${day}</span>${dayPlacements.length?`<span class="hint">${dayPlacements.length}</span>`:''}</div>${items}</div>`}$('calendar').className='calendar-view-grid';$('calendar').innerHTML=html;$('calendar').querySelectorAll('[data-calendar-date]').forEach(day=>day.addEventListener('click',event=>{if(event.target.closest('[data-calendar-drag]'))return;selectedDate=day.dataset.calendarDate;renderCalendarDashboardStyle()}));$('calendar').querySelectorAll('[data-calendar-drop]').forEach(day=>{day.addEventListener('dragover',event=>{event.preventDefault();day.classList.add('drag-over')});day.addEventListener('dragleave',()=>day.classList.remove('drag-over'));day.addEventListener('drop',event=>{event.preventDefault();day.classList.remove('drag-over');const data=event.dataTransfer.getData('text/plain').split(':');if(data.length===2){savePlacement(data[0],data[1],day.dataset.calendarDrop);selectedDate=day.dataset.calendarDrop;renderCalendarDashboardStyle()}})});renderSelectedCalendarDay()}
+function renderSelectedCalendarDay(){let editor=document.getElementById('calendarDayEditor');if(!editor){editor=document.createElement('div');editor.id='calendarDayEditor';editor.className='calendar-day-editor';$('calendarView').append(editor)}const dayPlacements=placements.filter(item=>item.date===selectedDate),records=dayPlacements.map(item=>{const record=item.type==='goal'?goals.find(goal=>goal.id===item.itemId):tasks.find(task=>task.id===item.itemId);return record?{placement:item,record}:null}).filter(Boolean);editor.innerHTML=`<article class="card"><div class="head"><div><h2>${formatDate(selectedDate)}</h2><p class="subtitle">Edit what is planned for this day.</p></div></div><div class="form"><button class="primary" data-calendar-add="goal">Add existing goal</button><div class="calendar-drop-zone" data-editor-drop="${selectedDate}">Drag a saved goal or task here</div></div></article><article class="card"><div class="head"><div><h2>Day plan</h2><p class="subtitle">Remove a placement without deleting the original.</p></div><strong>${records.length}</strong></div><div class="calendar-placement-list">${records.length?records.map(({placement,record})=>`<div class="item"><div><b>${esc(record.title)}</b><div class="meta">${placement.type==='goal'?'Goal':'Task'}${placement.time?' · '+esc(placement.time):' · All day'}</div></div><div class="actions"><button class="small" data-calendar-edit="${placement.type}:${record.id}">Edit time</button><button class="small" data-calendar-remove="${placement.type}:${record.id}">Remove</button></div></div>`).join(''):'<p class="empty">Nothing planned for this day.</p>'}</div></article>`;editor.querySelector('[data-calendar-add]')?.addEventListener('click',()=>{const available=goals.filter(goal=>!placement('goal',goal.id));if(!available.length){toast('All saved goals already have a placement.');return}openSchedule(`goal:${available[0].id}`)});const drop=editor.querySelector('[data-editor-drop]');drop?.addEventListener('dragover',event=>{event.preventDefault();drop.classList.add('drag-over')});drop?.addEventListener('dragleave',()=>drop.classList.remove('drag-over'));drop?.addEventListener('drop',event=>{event.preventDefault();drop.classList.remove('drag-over');const data=event.dataTransfer.getData('text/plain').split(':');if(data.length===2){savePlacement(data[0],data[1],selectedDate);renderCalendarDashboardStyle()}})}
+function renderCalendarDashboard(){renderCalendarDashboardStyle()}renderCalendar=renderCalendarDashboard;renderDayItems=renderSelectedCalendarDay;document.addEventListener('dragstart',event=>{const item=event.target.closest('[data-calendar-drag]');if(item)event.dataTransfer.setData('text/plain',item.dataset.calendarDrag)});document.addEventListener('click',event=>{const remove=event.target.closest('[data-calendar-remove]'),edit=event.target.closest('[data-calendar-edit]');if(remove){const [type,itemId]=remove.dataset.calendarRemove.split(':');removePlacement(type,itemId);renderCalendarDashboardStyle()}if(edit){openSchedule(edit.dataset.calendarEdit)}});renderCalendarDashboardStyle();
+</script>
+<script>
+const calendarLightStyle=document.createElement('style');calendarLightStyle.textContent='body[data-theme="light"] #calendarView .calendar-view-grid .day{background:#fff;border-color:#d8e3f1;color:#10203a}body[data-theme="light"] #calendarView .calendar-view-grid .weekday{color:#60728c}body[data-theme="light"] #calendarView .calendar-view-grid .day.other{background:#f4f8ff;color:#9aaac0}body[data-theme="light"] #calendarView .calendar-view-grid .day.selected{background:#e5efff;border-color:#246bdb}body[data-theme="light"] #calendarView .calendar-view-grid .day.today{box-shadow:inset 0 3px #246bdb}body[data-theme="light"] #calendarView .calendar-view-grid .cal-item.goal{background:#e5eaff;color:#3949a3}body[data-theme="light"] #calendarView .calendar-view-grid .cal-item.task{background:#e1f7eb;color:#137345}body[data-theme="light"] #calendarView .calendar-placement-list .item,body[data-theme="light"] #calendarView .calendar-drop-zone{background:#fff;border-color:#d8e3f1;color:#10203a}';document.head.append(calendarLightStyle);
+</script>
+<script>
+const topbarStyle=document.createElement('style');topbarStyle.textContent=`.top{align-items:center}.top .date{display:flex;align-items:center;gap:12px}.top-clock{font-size:clamp(22px,3vw,34px);font-weight:850;letter-spacing:-.04em;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}.top-date-label{font-size:12px;color:var(--muted);white-space:nowrap}.top-account-actions{display:flex;align-items:center;gap:8px;margin-left:8px}.top-account-actions .small{min-height:34px;white-space:nowrap}.top-account-actions .small:first-child{color:var(--text)}@media(max-width:850px){.top{align-items:flex-start}.top .date{align-items:flex-end;flex-direction:column;gap:8px}.top-account-actions{margin-left:0;flex-wrap:wrap;justify-content:flex-end}}@media(max-width:520px){.top-clock{font-size:22px}.top-account-actions{display:grid;grid-template-columns:1fr 1fr}.top-account-actions .small{font-size:11px;padding:5px}}`;document.head.append(topbarStyle);const appTop=document.querySelector('.top'),appDate=document.getElementById('clock'),appActions=document.querySelector('[data-account-action]');if(appTop&&appDate){appDate.classList.add('top-clock');const dateLabel=document.createElement('span');dateLabel.className='top-date-label';dateLabel.textContent=new Date().toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});appDate.parentElement.insertBefore(dateLabel,appDate);if(appActions){appActions.classList.add('top-account-actions');appDate.parentElement.append(appActions)}}
+</script>
+<script>
+const finalTop=document.querySelector('.top .date'),finalControls=document.querySelector('[data-account-action]');if(finalTop&&finalControls){finalTop.append(finalControls);finalControls.classList.add('top-account-actions');finalControls.style.display='flex';finalControls.style.alignItems='center';finalControls.style.gap='5px';finalControls.querySelectorAll('button').forEach(button=>{button.style.minHeight='26px';button.style.padding='4px 7px';button.style.fontSize='11px'});document.querySelectorAll('.bottom [data-account-action]').forEach(item=>item.style.display='none')}
+function keepAccountControlsInHeader(){const header=document.querySelector('.top .date'),controls=document.querySelector('[data-account-action]');if(header&&controls&&controls.parentElement!==header){header.append(controls)}if(controls){controls.style.display='flex';controls.classList.add('top-account-actions')}document.querySelectorAll('.bottom [data-account-action]').forEach(item=>{if(item!==controls)item.remove()})}keepAccountControlsInHeader();window.addEventListener('load',keepAccountControlsInHeader);setTimeout(keepAccountControlsInHeader,0);new MutationObserver(keepAccountControlsInHeader).observe(document.body,{childList:true,subtree:true});
+</script>
+<script>
+const habitsKey='daymark-habits-alex',habitData=()=>{try{return JSON.parse(localStorage.getItem(habitsKey)||'[]')}catch(error){return[]}},saveHabits=value=>localStorage.setItem(habitsKey,JSON.stringify(value));function rhythmPercentForDate(date){const total=goals.filter(goal=>goal.enabled!==false&&goal.rhythm===true).length+(settings.journalRhythm===true?1:0)+habitData().filter(habit=>habit.enabled===true).length;if(!total)return 0;const complete=goals.filter(goal=>goal.enabled!==false&&goal.rhythm===true&&(goal.completedOn===date||goal.done&&date===todayKey())).length+habitData().filter(habit=>habit.enabled===true&&(habit.completedOn===date||habit.completed===date)).length+(settings.journalRhythm===true&&journal.some(entry=>entry.title?.trim()&&entry.body?.trim()&&localDayKey(new Date(entry.createdAt))===date)?1:0);return Math.min(100,Math.round(complete/total*100))}function saveRhythmHistory(){settings.rhythmHistory={...(settings.rhythmHistory||{}),[todayKey()]:Number(document.getElementById('rhythmPercent')?.textContent.replace('%','')||0)};persist()}
+function renderStreakCard(){let card=document.getElementById('streakCard');if(!card){card=document.createElement('article');card.id='streakCard';card.className='card streak-card';document.querySelector('#dashboardView .dashboard-lower')?.after(card)}const history=settings.rhythmHistory||{},dates=[];for(let offset=0;offset<365;offset++){const date=new Date();date.setDate(date.getDate()-offset);dates.push(localDayKey(date))}let streak=0;for(const date of dates){if(Number(history[date]||0)===100)streak++;else break}card.innerHTML=`<div class="head"><div><h2>Daily streak</h2><p class="subtitle">A 100% Daily Rhythm day keeps it going.</p></div><strong>${streak} day${streak===1?'':'s'}</strong></div><div class="streak-progress"><span style="width:${Math.min(100,streak*10)}%"></span></div><p class="hint">${streak?'Keep the rhythm moving.':'Complete every enabled contributor today to start your streak.'}</p>`}
+function renderHabitsView(){let view=document.getElementById('habitsView');if(!view){view=document.createElement('section');view.id='habitsView';view.className='view';view.innerHTML='<div class="layout"><article class="card"><div class="head"><div><h2>Add a habit</h2><p class="subtitle">Place habits on a simple daily timeline.</p></div></div><form class="form" id="habitForm"><div class="field"><label>Habit name</label><input id="habitName" required placeholder="Morning walk"></div><div class="field"><label>Time</label><input id="habitTime" type="time" required></div><label class="setting"><span>Enabled</span><span class="toggle"><input id="habitEnabled" type="checkbox" checked><span class="slider"></span></span></label><button class="primary">Add habit</button></form><div class="field" style="margin-top:18px"><label>Wake-up time from Alarms</label><input id="wakeTime" type="time"></div></article><article class="card"><div class="head"><div><h2>Today’s habits</h2><p class="subtitle">Check habits off once each day.</p></div></div><div id="habitTimeline" class="habit-timeline"></div></article></div>';$('main').append(view);$('habitForm').addEventListener('submit',event=>{event.preventDefault();const habits=habitData();habits.push({id:crypto.randomUUID(),name:$('habitName').value.trim(),time:$('habitTime').value,enabled:$('habitEnabled').checked});saveHabits(habits);event.target.reset();$('habitEnabled').checked=true;renderHabitsView();renderRhythm();toast('Habit added.')});$('wakeTime').addEventListener('change',()=>{settings.wakeTime=$('wakeTime').value;persist()})}const habits=habitData(),today=todayKey();$('wakeTime').value=settings.wakeTime||'';$('habitTimeline').innerHTML=Array.from({length:24},(_,hour)=>{const items=habits.filter(habit=>habit.enabled!==false&&Number(habit.time?.slice(0,2))===hour);return `<div class="habit-slot"><span>${String(hour).padStart(2,'0')}:00</span><div>${items.length?items.map(habit=>`<button class="habit-pill ${habit.completedOn===today?'complete':''}" data-habit-check="${habit.id}">${esc(habit.name)} ${habit.completedOn===today?'✓':''}</button>`).join(''):'<span class="habit-empty">Drop habits here</span>'}</div></div>`}).join('');view.querySelectorAll('[data-habit-check]').forEach(button=>button.onclick=()=>{const records=habitData(),habit=records.find(item=>item.id===button.dataset.habitCheck);if(habit){habit.completedOn=habit.completedOn===today?null:today;saveHabits(records);renderHabitsView();renderRhythm();toast('Daily Rhythm updated.')}})}
+function renderStatsView(){let view=document.getElementById('statsView');if(!view){view=document.createElement('section');view.id='statsView';view.className='view';view.innerHTML='<article class="card stats-panel"><div class="head"><div><h2>Stats</h2><p class="subtitle" id="statsIdentity"></p></div></div><div class="stats-grid" id="statsGrid"></div><h3>Daily Rhythm by day</h3><div class="weekday-stats" id="weekdayStats"></div></article>';$('main').append(view)}const profile=JSON.parse(localStorage.getItem('daymark-profile-alex')||'{}'),history=settings.rhythmHistory||{},values=Object.values(history).map(Number),average=values.length?Math.round(values.reduce((a,b)=>a+b,0)/values.length):0,moods=profile.mood? [profile.mood]:[],moodAverage=moods.length?moods[0]:'No mood data';$('statsIdentity').textContent=`${profile.name||'Tiki'} · @${profile.username||'Tiki'}`;$('statsGrid').innerHTML=`<div class="stat-box"><span>Average Daily Rhythm</span><strong>${average}%</strong></div><div class="stat-box"><span>Mood average</span><strong>${moodAverage}</strong></div><div class="stat-box"><span>Days tracked</span><strong>${values.length}</strong></div>`;$('weekdayStats').innerHTML=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map((day,index)=>{const dayValues=Object.entries(history).filter(([date])=>new Date(`${date}T12:00`).getDay()===(index+1)%7).map(([,value])=>Number(value));const avg=dayValues.length?Math.round(dayValues.reduce((a,b)=>a+b,0)/dayValues.length):0;return `<div><span>${day}</span><strong>${avg}%</strong></div>`}).join('')}
+function setupDashboardExtras(){const extraStyle=document.createElement('style');extraStyle.textContent='.streak-card{margin-top:24px}.streak-progress{height:10px;background:var(--line);border-radius:10px;overflow:hidden}.streak-progress span{display:block;height:100%;background:var(--blue);border-radius:inherit}.habit-timeline{display:grid;gap:6px;max-height:520px;overflow:auto}.habit-slot{display:grid;grid-template-columns:70px 1fr;gap:12px;align-items:center;min-height:42px;border-bottom:1px solid var(--line);padding:5px 0}.habit-slot>span{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}.habit-pill{border:1px solid #3267a8;background:var(--soft);color:var(--text);border-radius:8px;padding:7px 10px;margin:2px}.habit-pill.complete{background:#123a2a;color:#8ff0b6}.habit-empty{color:var(--muted);font-size:12px}.stats-panel{max-width:980px}.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 28px}.stat-box{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--panel2)}.stat-box span{display:block;color:var(--muted);font-size:12px}.stat-box strong{display:block;font-size:24px;margin-top:7px}.weekday-stats{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.weekday-stats div{border:1px solid var(--line);border-radius:8px;padding:10px;text-align:center}.weekday-stats span{display:block;color:var(--muted);font-size:11px}.weekday-stats strong{display:block;margin-top:6px}@media(max-width:650px){.stats-grid,.weekday-stats{grid-template-columns:1fr 1fr}.weekday-stats div:last-child{grid-column:1/-1}}';document.head.append(extraStyle);renderHabitsView();renderStatsView();document.querySelectorAll('[data-view="habits"]').forEach(button=>button.addEventListener('click',()=>{showView('habits')}));document.querySelectorAll('[data-view="stats"]').forEach(button=>button.addEventListener('click',()=>{showView('stats')}));document.querySelectorAll('[data-view="ai"]').forEach(button=>button.addEventListener('click',()=>{showView('ai')}));const aiView=document.getElementById('aiView');if(!aiView){const empty=document.createElement('section');empty.id='aiView';empty.className='view';$('main').append(empty)}renderStreakCard();saveRhythmHistory()}
+setupDashboardExtras();
+const rhythmWithHistory=renderRhythm;renderRhythm=()=>{rhythmWithHistory();const history=settings.rhythmHistory||{};history[todayKey()]=Number(document.getElementById('rhythmPercent')?.textContent.replace('%','')||0);settings.rhythmHistory=history;localStorage.setItem(KEYS.settings,JSON.stringify(settings));renderStreakCard();renderStatsView()};renderRhythm();
+</script>
+<style id="dm-layer-css">
+/* ===== DayMark launch layer: AI Chat, journal chat, calendar ===== */
+
+/* ---------- shared ---------- */
+.dm-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cal2 button:focus-visible,.ai2 button:focus-visible,.jc button:focus-visible,.cal2 input:focus-visible,.cal2 select:focus-visible,.ai2 textarea:focus-visible,.ai2 select:focus-visible,.ai2 input:focus-visible,.jc input:focus-visible,.c2-day:focus-visible,.c2-pill:focus-visible,.c2-chip:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.dm-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#8ea0ba;margin-right:6px;vertical-align:middle}
+.dm-dot.on{background:var(--green);box-shadow:0 0 0 3px #35d07f33}
+.dm-dot.warn{background:var(--yellow)}
+
+/* ---------- calendar ---------- */
+.cal2{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+.cal2-main{min-width:0}
+.cal2-bar{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;margin-bottom:16px}
+.cal2-bar h2{margin:0;font-size:20px;text-align:center;letter-spacing:-.02em}
+.cal2-nav{display:flex;gap:6px}
+.cal2-nav .secondary{padding:8px 12px}
+.cal2-legend{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:12px}
+.cal2-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.cal2-legend .lg-goal{background:#7c8cff}.cal2-legend .lg-task{background:#35d07f}
+.cal2-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.c2-wd{color:var(--muted);font-size:12px;font-weight:700;text-align:center;padding:4px 0 6px;letter-spacing:.04em}
+.c2-blank{min-height:0}
+.c2-day{position:relative;min-width:0;min-height:108px;border:1px solid var(--line);border-radius:11px;background:var(--panel2);padding:7px 7px 8px;display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:border-color .12s,background .12s,box-shadow .12s}
+.c2-day:hover{border-color:#3b82f688}
+.c2-day.past{opacity:.78}
+.c2-day.today{border-color:var(--blue);box-shadow:inset 0 3px var(--blue)}
+.c2-day.selected{background:var(--soft);border-color:var(--blue);box-shadow:0 0 0 2px #3b82f655}
+.c2-day.drag-over{background:var(--soft);border-color:var(--blue);border-style:dashed;box-shadow:0 0 0 3px #3b82f64d}
+.c2-num{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:13px;min-height:20px}
+.c2-day.today .c2-num span{background:var(--blue);color:#fff;border-radius:999px;min-width:22px;height:22px;display:inline-grid;place-items:center;padding:0 5px}
+.c2-num em{font-style:normal;font-weight:700;font-size:10px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:1px 6px}
+.c2-pill{display:flex;gap:5px;align-items:center;min-width:0;font-size:11px;line-height:1.2;padding:4px 6px;border-radius:6px;background:var(--soft);background:color-mix(in srgb,var(--c,#7c8cff) 20%,var(--panel));border-left:3px solid var(--c,#7c8cff);color:var(--text);cursor:grab;user-select:none}
+.c2-pill:active{cursor:grabbing}
+.c2-pill b{font-weight:800;opacity:.75;flex:none;font-variant-numeric:tabular-nums}
+.c2-pill span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.c2-pill.done span{text-decoration:line-through;opacity:.6}
+.c2-pill.dragging,.c2-chip.dragging{opacity:.4}
+.c2-more{border:0;background:none;color:var(--blue);font-size:11px;font-weight:700;text-align:left;padding:2px 4px;border-radius:5px}
+.c2-more:hover{text-decoration:underline}
+
+.cal2-side{display:grid;gap:16px;position:sticky;top:16px;min-width:0}
+.cal2-side .card{padding:18px}
+.cal2-side h2{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.c2-count{font-size:12px;font-weight:800;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+.c2-list{display:grid;gap:8px;max-height:340px;overflow:auto;padding-right:2px}
+.c2-row{border:1px solid var(--line);border-left:4px solid var(--c,#7c8cff);border-radius:10px;background:var(--panel2);padding:10px 11px;display:grid;gap:9px}
+.c2-row-main{display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-width:0}
+.c2-row-main b{min-width:0;overflow-wrap:anywhere}
+.c2-row-ctl{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end}.c2-row-ctl .small{grid-column:1/-1;justify-self:start}
+.c2-row-ctl label,.c2-add label{display:grid;gap:3px;font-size:11px;color:var(--muted);font-weight:700}
+.cal2 input[type=time],.cal2 input[type=date],.cal2 select{width:100%;min-width:0;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);padding:7px 8px;font-size:13px}
+.c2-add{display:grid;grid-template-columns:1fr 104px auto;gap:8px;align-items:end;margin-top:12px;padding-top:14px;border-top:1px dashed var(--line)}
+.c2-add .primary{padding:8px 13px}
+.c2-hintline{font-size:12px;color:var(--muted);margin:10px 0 0}
+.c2-tray-list{display:grid;gap:7px;max-height:300px;overflow:auto}
+.c2-chip{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-left:4px solid var(--c,#7c8cff);border-radius:9px;background:var(--panel2);padding:8px 9px;cursor:grab;min-width:0}
+.c2-chip-title{flex:1;min-width:0;font-weight:700;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.c2-grip{color:var(--muted);letter-spacing:-2px;font-size:12px;flex:none}
+#trayCard.drag-over{outline:2px dashed var(--blue);outline-offset:-6px;background:var(--soft)}
+.c2-tray-note{font-size:12px;color:var(--muted);margin:0 0 10px}
+
+@media(max-width:1100px){.cal2{grid-template-columns:1fr}.cal2-side{position:static;grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.cal2-side{grid-template-columns:1fr}.cal2-bar{grid-template-columns:1fr auto}.cal2-bar h2{grid-column:1/-1;order:-1}.cal2-legend{display:none}}
+@media(max-width:560px){.cal2-grid{gap:3px}.c2-day{min-height:74px;padding:4px;border-radius:8px}.c2-pill{font-size:0;padding:0;height:7px;border-radius:4px;border-left-width:0;background:var(--c,#7c8cff)}.c2-pill *{display:none}.c2-num{font-size:12px}.c2-num em{display:none}.c2-more{font-size:10px;padding:0}.c2-wd{font-size:10px}.c2-add{grid-template-columns:1fr 1fr}.c2-add select{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){.c2-day{transition:none}}
+
+/* ---------- AI Chat page ---------- */
+.ai2{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;align-items:start}
+.ai2-chat{display:flex;flex-direction:column;min-width:0;padding:0;overflow:hidden;height:calc(100vh - 190px);height:calc(100dvh - 190px);min-height:520px}
+.ai2-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 20px;border-bottom:1px solid var(--line)}
+.ai2-id{display:flex;align-items:center;gap:12px}
+.ai2-id h2{margin:0;font-size:18px}
+.ai2-av{width:40px;height:40px;font-size:18px;background:linear-gradient(135deg,#2563d8,#75aaff);color:#fff}
+.ai2-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ai2 select,.ai2 input[type=url],.ai2 input[type=text]{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);padding:8px 10px;font-size:13px}
+.ai2-conn{padding:14px 20px;border-bottom:1px solid var(--line);background:var(--panel2);display:grid;gap:8px}
+.ai2-conn[hidden]{display:none}
+.ai2-conn-row{display:flex;gap:8px;flex-wrap:wrap}
+.ai2-conn-row input{flex:1;min-width:220px}
+.ai2-msgs{display:flex;flex-direction:column;gap:12px;padding:20px;flex:1;min-height:0;overflow:auto;scroll-behavior:smooth}
+.msg{max-width:min(640px,88%);padding:11px 14px;border-radius:16px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg small{display:block;margin-top:5px;font-size:10px;opacity:.65}
+.msg.user{align-self:flex-end;background:var(--blue);color:#fff;border-bottom-right-radius:5px}
+.msg.tiki{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:5px}
+.msg.safety{border-left:4px solid var(--yellow)}
+.msg.error{border-color:#f8717188}
+.msg.typing{display:flex;gap:5px;align-items:center;padding:14px 16px}
+.msg.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:dm-bounce 1.1s infinite ease-in-out}
+.msg.typing i:nth-child(2){animation-delay:.15s}.msg.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dm-bounce{0%,80%,100%{transform:translateY(0);opacity:.5}40%{transform:translateY(-5px);opacity:1}}
+@media(prefers-reduced-motion:reduce){.msg.typing i{animation:none}.ai2-msgs{scroll-behavior:auto}}
+.ai2-empty{margin:auto;text-align:center;max-width:430px;color:var(--muted);display:grid;gap:14px;justify-items:center;padding:10px}
+.ai2-empty h3{margin:0;color:var(--text);font-size:20px;letter-spacing:-.02em}
+.ai2-empty p{margin:0;line-height:1.55}
+.ai2-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.ai2-chips button,.jc-chips button{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:999px;padding:7px 12px;font-size:12.5px}
+.ai2-chips button:hover,.jc-chips button:hover{border-color:var(--blue);color:var(--blue)}
+.ai2-compose{display:flex;gap:10px;align-items:flex-end;padding:14px 20px;border-top:1px solid var(--line)}
+.ai2-compose textarea{flex:1;resize:none;min-height:44px;max-height:140px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);padding:11px 13px;line-height:1.4;outline:0}
+.ai2-compose textarea:focus{border-color:var(--blue)}
+.ai2-compose .primary{height:44px;padding:0 20px}
+.ai2-compose .primary:disabled{opacity:.55;cursor:default}
+.ai2-foot{padding:0 20px 14px;font-size:12px;color:var(--muted);margin:0}
+.ai2-side{display:grid;gap:16px}
+.ai2-side .card{padding:18px}
+.ai2-side h2{font-size:15px}
+.ai2-side .setting{padding:12px 0}
+.ai2-side .setting:last-of-type{border-bottom:0}
+.ai2-side .setting b{font-size:13px}
+.ai2-side .setting p{font-size:12px;margin:3px 0 0}
+.ai2-modes{display:grid;gap:8px;margin-top:6px}
+.ai2-mode{display:block;text-align:left;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:10px 12px}
+.ai2-mode span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.ai2-mode.active{border-color:var(--blue);background:var(--soft)}
+@media(max-width:1100px){.ai2{grid-template-columns:1fr}.ai2-side{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.ai2-chat{height:calc(100vh - 270px);height:calc(100dvh - 270px);min-height:440px}.ai2-side{grid-template-columns:1fr}.ai2-head,.ai2-compose{padding-left:14px;padding-right:14px}.ai2-msgs{padding:14px}.msg{max-width:94%}}
+
+/* ---------- Journal mini-chat ---------- */
+.jc{margin-top:22px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);overflow:hidden}
+.jc-head{display:flex;align-items:center;gap:10px;padding:10px 12px;flex-wrap:wrap}
+.jc-av{width:28px;height:28px;font-size:13px;background:linear-gradient(135deg,#2563d8,#75aaff);color:#fff}
+.jc-head b{font-size:14px}
+.jc-status{font-size:12px;color:var(--muted);flex:1;min-width:150px}
+.jc-pulse{animation:dm-pulse 2.4s infinite}
+@keyframes dm-pulse{0%,100%{box-shadow:0 0 0 0 #35d07f55}50%{box-shadow:0 0 0 5px #35d07f00}}
+@media(prefers-reduced-motion:reduce){.jc-pulse{animation:none}}
+.jc-body{padding:0 12px 12px;display:grid;gap:10px}
+.jc-body[hidden]{display:none}
+.jc-access{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:9px 11px;font-size:13px}
+.jc-access span:first-child{min-width:0}
+.jc-access small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
+.jc-msgs{display:flex;flex-direction:column;gap:8px;max-height:230px;overflow:auto}
+.jc-msgs:empty{display:none}
+.jc-msgs .msg{font-size:13.5px;padding:8px 11px;max-width:94%}
+.jc-form{display:flex;gap:8px}
+.jc-form input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);padding:9px 11px;font-size:13.5px;outline:0}
+.jc-form input:focus{border-color:var(--blue)}
+.jc-form .primary{padding:8px 14px}
+.jc-form .primary:disabled{opacity:.55}
+.jc-chips{display:flex;gap:6px;flex-wrap:wrap}
+.jc-chips button{font-size:12px;padding:5px 10px}
+.jc-note{margin:0;font-size:11.5px;color:var(--muted);line-height:1.45}
+
+/* ---------- contrast and mobile fixes for the existing design ---------- */
+body[data-theme="light"] .secondary{color:#1d4ed8;border-color:#bcd0f0;background:#e8f0ff}
+body[data-theme="light"] .chip{color:#1d4ed8;background:#e3edff}
+body[data-theme="light"] .chip.overdue{color:#b42318;background:#fde8e8}
+body[data-theme="light"] .chip.complete{color:#137345;background:#e1f7eb}
+.cal2 .chip,.ai2 .chip,.jc .chip{font-weight:700}
+@media(max-width:850px){
+  .nav button[data-view="dashboard"]:before{content:'⌂'}
+  .nav button[data-view="calendar"]:before{content:'▣'}
+  .nav button[data-view="goals"]:before{content:'◎'}
+  .nav button[data-view="habits"]:before{content:'↻'}
+  .nav button[data-view="journal"]:before{content:'✎'}
+  .nav button[data-view="stats"]:before{content:'▥'}
+  .nav button[data-view="ai"]:before{content:'✦'}
+  .bottom>button.nav{font-size:0!important;text-align:center!important;padding:12px!important}
+  .bottom>button.nav:before{content:'⚙';font-size:20px}
+}
+
+</style>
+<script>
+/* ===== DayMark launch layer =====
+   1. Fixes for load-time errors in the earlier scripts
+   2. Calendar: organised month view, drag between days, unscheduled tray, day panel
+   3. AI Chat page (sidebar) with a pluggable Tiki connection
+   4. Journal chat box: Tiki can read along (if you allow it) but only answers when asked
+
+   TIKI CONNECTION (how to plug the real AI in)
+   The page sends:  POST <address>   Content-Type: application/json
+     { "message": "text", "history": [{"role":"user|assistant","content":"..."}],
+       "mode": "general|manager|wellness",
+       "context": { "date": "...", "journal": {...} | absent, "plan": {...} | absent } }
+   and expects:     { "reply": "text" }
+   Set the address under AI Chat -> Connection, or set window.DAYMARK_AI_ENDPOINT, or replace
+   window.DaymarkAI.ask(request) with your own function that returns { reply }.
+*/
+(function () {
+  'use strict';
+  const byId = id => document.getElementById(id);
+  const $q = (selector, root = document) => root.querySelector(selector);
+  const pad = n => String(n).padStart(2, '0');
+  const localKey = (d = new Date()) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const safe = fn => { try { fn(); } catch (error) { console.warn('DayMark:', error); } };
+  const store = {
+    get(key, fallback) { try { const raw = localStorage.getItem(key); return raw === null ? fallback : JSON.parse(raw); } catch (e) { return fallback; } },
+    set(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* storage full or blocked */ } },
+    raw(key) { try { return localStorage.getItem(key) || ''; } catch (e) { return ''; } },
+    setRaw(key, value) { try { localStorage.setItem(key, value); } catch (e) { /* ignore */ } },
+    del(key) { try { localStorage.removeItem(key); } catch (e) { /* ignore */ } }
+  };
+  const CHAT_KEY = 'daymark-ai-chat-alex';
+  const JOURNAL_CHAT_KEY = 'daymark-ai-journalchat-alex';
+  const ENDPOINT_KEY = 'daymark-ai-endpoint';
+  window.DAYMARK_AI_ENDPOINT = window.DAYMARK_AI_ENDPOINT || 'http://127.0.0.1:8765/chat';
+
+  /* ------------------------------------------------------------------ 1. fixes */
+
+  // The "Today's plan" card was deleted by one script and needed by another.
+  if (!byId('dashboardTasks')) {
+    const lower = $q('#dashboardView .dashboard-lower');
+    if (lower) {
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.innerHTML = '<div class="head"><div><h2>Today\'s plan</h2><p class="subtitle">Goals scheduled for today.</p></div><button class="link" data-view="calendar">Open calendar →</button></div><div class="list" id="dashboardTasks"></div>';
+      lower.prepend(card);
+    }
+  }
+  populateGoalSelect = () => { };                       // the task form no longer exists
+  renderAll = () => {                                   // one broken renderer must not stop the rest
+    safe(() => renderGoals());
+    safe(() => renderCalendar());
+    safe(() => renderJournal());
+    safe(() => renderRhythm());
+    safe(() => renderDashboard());
+    safe(() => renderHomeExtras());
+  };
+
+  /* ------------------------------------------------------------------ 2. calendar */
+
+  const WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const recordOf = p => p.type === 'goal' ? goals.find(g => g.id === p.itemId) : tasks.find(t => t.id === p.itemId);
+  const visibleRecord = p => { const r = recordOf(p); return r && !(p.type === 'goal' && r.enabled === false) ? r : null; };
+  const colorOf = r => /^#[0-9a-f]{3,8}$/i.test(r.color || '') ? r.color : '#7c8cff';
+  const isDone = r => r.done === true || r.completedOn === localKey();
+  const longDate = key => new Date(key + 'T12:00').toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
+  const shortDate = key => new Date(key + 'T12:00').toLocaleDateString([], { month: 'short', day: 'numeric' });
+  const compactTime = t => { const [h, m] = t.split(':').map(Number); return `${h % 12 || 12}${m ? ':' + pad(m) : ''}${h >= 12 ? 'p' : 'a'}`; };
+  const dayRecords = date => placements
+    .filter(p => p.date === date)
+    .map(p => ({ p, r: visibleRecord(p) }))
+    .filter(x => x.r)
+    .sort((a, b) => (a.p.time || '99:99').localeCompare(b.p.time || '99:99') || a.r.title.localeCompare(b.r.title));
+  const unscheduledItems = () => [
+    ...goals.filter(g => g.enabled !== false).map(r => ({ type: 'goal', r })),
+    ...tasks.map(r => ({ type: 'task', r }))
+  ].filter(x => !placement(x.type, x.r.id));
+  const findRecord = (type, id) => type === 'goal' ? goals.find(g => g.id === id) : tasks.find(t => t.id === id);
+
+  function syncMonthTo(date) {
+    const d = new Date(date + 'T12:00');
+    if (d.getFullYear() !== month.getFullYear() || d.getMonth() !== month.getMonth()) month = new Date(d.getFullYear(), d.getMonth(), 1);
+  }
+  function selectDate(date) { selectedDate = date; syncMonthTo(date); renderCalendarV2(); }
+  function placeItem(type, id, date, time) {
+    const existing = placement(type, id);
+    savePlacement(type, id, date, time !== undefined ? time : (existing ? existing.time || '' : ''));
+    selectedDate = date; syncMonthTo(date); renderCalendarV2();
+  }
+
+  function buildCalendarShell() {
+    const view = byId('calendarView');
+    if (!view || view.dataset.c2) return;
+    view.dataset.c2 = '1';
+    view.innerHTML = `
+      <div class="cal2">
+        <article class="card cal2-main">
+          <div class="cal2-bar">
+            <div class="cal2-nav">
+              <button class="secondary" id="prevMonth" type="button" aria-label="Previous month">←</button>
+              <button class="secondary" id="todayMonth" type="button">Today</button>
+              <button class="secondary" id="nextMonth" type="button" aria-label="Next month">→</button>
+            </div>
+            <h2 id="monthTitle" aria-live="polite"></h2>
+            <div class="cal2-legend"><span><i class="lg-goal"></i>Goal</span><span><i class="lg-task"></i>Task</span></div>
+          </div>
+          <div class="cal2-grid" id="calendar" role="grid" aria-label="Month calendar"></div>
+          <p class="c2-hintline">Drag a goal onto a day, or between days. Click a day to edit its plan. Arrow keys move between days.</p>
+        </article>
+        <aside class="cal2-side">
+          <article class="card">
+            <div class="head"><div><h2 id="selectedTitle">Select a day</h2><p class="subtitle">Sorted by time.</p></div><span class="c2-count" id="dayCount">0</span></div>
+            <div class="c2-list" id="dayItems"></div>
+            <div id="dayAdd"></div>
+          </article>
+          <article class="card" id="trayCard">
+            <div class="head"><div><h2>Unscheduled</h2><p class="subtitle">Drag onto a day. Drop a scheduled item here to unschedule it.</p></div><span class="c2-count" id="trayCount">0</span></div>
+            <div class="c2-tray-list" id="unscheduled"></div>
+          </article>
+        </aside>
+      </div>`;
+    bindCalendar(view);
+  }
+
+  function pillHtml(p, r) {
+    return `<div class="c2-pill ${p.type}${isDone(r) ? ' done' : ''}" draggable="true" data-c2-drag="${p.type}:${r.id}" style="--c:${colorOf(r)}" title="${esc(r.title)}${p.time ? ' · ' + p.time : ''}">${p.time ? `<b>${compactTime(p.time)}</b>` : ''}<span>${esc(r.title)}</span></div>`;
+  }
+
+  function renderCalendarV2() {
+    buildCalendarShell();
+    const grid = byId('calendar');
+    if (!grid) return;
+    const y = month.getFullYear(), m = month.getMonth();
+    const lead = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate(), today = localKey();
+    byId('monthTitle').textContent = month.toLocaleDateString([], { month: 'long', year: 'numeric' });
+    let html = WEEK.map(d => `<div class="c2-wd" role="columnheader">${d}</div>`).join('');
+    for (let i = 0; i < lead; i++) html += '<div class="c2-blank" aria-hidden="true"></div>';
+    for (let d = 1; d <= days; d++) {
+      const date = `${y}-${pad(m + 1)}-${pad(d)}`, recs = dayRecords(date), shown = recs.slice(0, 3), more = recs.length - shown.length;
+      html += `<div class="c2-day${date === today ? ' today' : ''}${date === selectedDate ? ' selected' : ''}${date < today ? ' past' : ''}" data-c2-date="${date}" role="gridcell" tabindex="${date === selectedDate ? 0 : -1}" aria-selected="${date === selectedDate}" aria-label="${longDate(date)}, ${recs.length} planned"><div class="c2-num"><span>${d}</span>${recs.length ? `<em>${recs.length}</em>` : ''}</div>${shown.map(x => pillHtml(x.p, x.r)).join('')}${more > 0 ? `<button class="c2-more" type="button" data-c2-more tabindex="-1">+${more} more</button>` : ''}</div>`;
+    }
+    grid.innerHTML = html;
+    renderTray();
+    renderDayPanel();
+  }
+
+  function renderTray() {
+    const list = byId('unscheduled');
+    if (!list) return;
+    const items = unscheduledItems();
+    byId('trayCount').textContent = items.length;
+    list.innerHTML = items.length ? items.map(({ type, r }) => `<div class="c2-chip" draggable="true" data-c2-drag="${type}:${r.id}" style="--c:${colorOf(r)}"><span class="c2-grip" aria-hidden="true">⋮⋮</span><span class="c2-chip-title" title="${esc(r.title)}">${esc(r.title)}</span><span class="chip">${type}</span><button class="small" type="button" data-schedule="${type}:${r.id}">Pick date</button></div>`).join('')
+      : '<p class="empty">Everything is scheduled.</p>';
+  }
+
+  function renderDayPanel() {
+    const list = byId('dayItems');
+    if (!list) return;
+    const recs = dayRecords(selectedDate), today = localKey();
+    byId('selectedTitle').innerHTML = esc(longDate(selectedDate)) + (selectedDate === today ? ' <span class="chip">Today</span>' : '');
+    byId('dayCount').textContent = recs.length;
+    list.innerHTML = recs.length ? recs.map(({ p, r }) => {
+      const key = `${p.type}:${r.id}`;
+      return `<div class="c2-row" style="--c:${colorOf(r)}"><div class="c2-row-main"><b>${esc(r.title)}</b><span class="chip">${p.type}</span>${r.deadline === selectedDate ? '<span class="chip overdue">Deadline</span>' : ''}${isDone(r) ? '<span class="chip complete">Done</span>' : ''}</div><div class="c2-row-ctl"><label>Time<input type="time" value="${esc(p.time || '')}" data-c2-time="${key}" aria-label="Time for ${esc(r.title)}"></label><label>Date<input type="date" value="${p.date}" data-c2-move="${key}" aria-label="Date for ${esc(r.title)}"></label><button class="small" type="button" data-c2-remove="${key}">Unschedule</button></div></div>`;
+    }).join('') : '<p class="empty">Nothing planned for this day.<br><span class="hint">Drag something here, or add it below.</span></p>';
+    const avail = unscheduledItems();
+    byId('dayAdd').innerHTML = avail.length ? `<div class="c2-add"><label>Add to this day<select id="c2Pick">${avail.map(({ type, r }) => `<option value="${type}:${r.id}">${esc(r.title)} (${type})</option>`).join('')}</select></label><label>Time<input type="time" id="c2AddTime"></label><button class="primary" type="button" id="c2AddBtn">Add</button></div>` : '';
+  }
+
+  function dragPayload(event) {
+    const raw = event.dataTransfer ? event.dataTransfer.getData('text/plain') : '';
+    const parts = raw.split(':');
+    if (parts.length !== 2 || !['goal', 'task'].includes(parts[0]) || !findRecord(parts[0], parts[1])) return null;
+    return { type: parts[0], id: parts[1] };
+  }
+
+  function bindCalendar(view) {
+    let hoverTimer = null;
+    const clearHover = () => { clearTimeout(hoverTimer); hoverTimer = null; };
+    const clearDragUi = () => view.querySelectorAll('.drag-over,.dragging').forEach(el => el.classList.remove('drag-over', 'dragging'));
+
+    view.addEventListener('click', event => {
+      const t = event.target;
+      if (t.closest('#prevMonth')) { month = new Date(month.getFullYear(), month.getMonth() - 1, 1); renderCalendarV2(); return; }
+      if (t.closest('#nextMonth')) { month = new Date(month.getFullYear(), month.getMonth() + 1, 1); renderCalendarV2(); return; }
+      if (t.closest('#todayMonth')) { selectDate(localKey()); return; }
+      const remove = t.closest('[data-c2-remove]');
+      if (remove) {
+        const [type, id] = remove.dataset.c2Remove.split(':');
+        const r = findRecord(type, id);
+        removePlacement(type, id);
+        toast(`${r ? '"' + r.title + '"' : 'Item'} moved back to Unscheduled.`);
+        return;
+      }
+      if (t.closest('#c2AddBtn')) {
+        const pick = byId('c2Pick');
+        if (!pick || !pick.value) return;
+        const [type, id] = pick.value.split(':');
+        placeItem(type, id, selectedDate, byId('c2AddTime').value || '');
+        toast(`Added to ${shortDate(selectedDate)}.`);
+        return;
+      }
+      const day = t.closest('[data-c2-date]');
+      if (day && !t.closest('button,input,select')) selectDate(day.dataset.c2Date);
+      else if (day && t.closest('[data-c2-more]')) selectDate(day.dataset.c2Date);
+    });
+
+    view.addEventListener('dblclick', event => {
+      const day = event.target.closest('[data-c2-date]');
+      if (!day) return;
+      selectDate(day.dataset.c2Date);
+      const pick = byId('c2Pick');
+      if (pick) pick.focus(); else toast('Everything is already scheduled.');
+    });
+
+    view.addEventListener('change', event => {
+      const timeInput = event.target.closest('[data-c2-time]');
+      if (timeInput) {
+        const [type, id] = timeInput.dataset.c2Time.split(':');
+        const p = placement(type, id);
+        if (p) { p.time = timeInput.value || ''; persist(); renderAll(); toast(p.time ? 'Time saved.' : 'Time cleared.'); }
+        return;
+      }
+      const moveInput = event.target.closest('[data-c2-move]');
+      if (moveInput && moveInput.value) {
+        const [type, id] = moveInput.dataset.c2Move.split(':');
+        placeItem(type, id, moveInput.value);
+        toast(`Moved to ${shortDate(moveInput.value)}.`);
+      }
+    });
+
+    view.addEventListener('keydown', event => {
+      const day = event.target.closest && event.target.closest('.c2-day');
+      if (!day || event.target !== day) return;
+      const step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[event.key];
+      if (step === undefined) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); selectDate(day.dataset.c2Date); } return; }
+      event.preventDefault();
+      const next = new Date(day.dataset.c2Date + 'T12:00');
+      next.setDate(next.getDate() + step);
+      selectDate(localKey(next));
+      const target = view.querySelector(`[data-c2-date="${localKey(next)}"]`);
+      if (target) target.focus();
+    });
+
+    // ----- drag and drop -----
+    view.addEventListener('dragstart', event => {
+      const source = event.target.closest && event.target.closest('[data-c2-drag]');
+      if (!source) return;
+      event.dataTransfer.setData('text/plain', source.dataset.c2Drag);
+      event.dataTransfer.effectAllowed = 'move';
+      source.classList.add('dragging');
+    });
+    view.addEventListener('dragend', () => { clearDragUi(); clearHover(); });
+    view.addEventListener('dragover', event => {
+      const day = event.target.closest && event.target.closest('[data-c2-date]');
+      const tray = event.target.closest && event.target.closest('#trayCard');
+      if (!day && !tray) return;
+      event.preventDefault();
+      event.dataTransfer.dropEffect = 'move';
+      view.querySelectorAll('.drag-over').forEach(el => { if (el !== day && el !== tray) el.classList.remove('drag-over'); });
+      (day || tray).classList.add('drag-over');
+    });
+    view.addEventListener('dragleave', event => {
+      const zone = event.target.closest && event.target.closest('[data-c2-date],#trayCard');
+      if (zone && !zone.contains(event.relatedTarget)) zone.classList.remove('drag-over');
+    });
+    view.addEventListener('dragenter', event => {
+      const nav = event.target.closest && event.target.closest('#prevMonth,#nextMonth');
+      clearHover();
+      if (!nav) return;
+      hoverTimer = setTimeout(() => nav.click(), 650);      // hover a month arrow while dragging to change month
+    });
+    view.addEventListener('drop', event => {
+      clearHover();
+      const day = event.target.closest && event.target.closest('[data-c2-date]');
+      const tray = event.target.closest && event.target.closest('#trayCard');
+      if (!day && !tray) return;
+      event.preventDefault();
+      clearDragUi();
+      const payload = dragPayload(event);
+      if (!payload) return;
+      const r = findRecord(payload.type, payload.id);
+      if (day) {
+        const date = day.dataset.c2Date, existing = placement(payload.type, payload.id);
+        if (existing && existing.date === date) return;
+        placeItem(payload.type, payload.id, date);
+        toast(`"${r.title}" ${existing ? 'moved' : 'scheduled'} for ${shortDate(date)}.`);
+      } else if (placement(payload.type, payload.id)) {
+        removePlacement(payload.type, payload.id);
+        toast(`"${r.title}" moved back to Unscheduled.`);
+      }
+    });
+  }
+
+  renderCalendar = renderCalendarV2;
+  renderDayItems = renderDayPanel;
+  renderUnscheduled = renderTray;
+
+  /* ------------------------------------------------------------------ 3. Tiki connection */
+
+  const CRISIS = /(suicid|kill myself|killing myself|end my life|ending my life|want to die|wanna die|don['’]?t want to (be alive|live)|no reason to live|better off dead|hurt myself|harm myself|self[- ]?harm|cut myself|take my own life|overdose)/i;
+  const CRISIS_REPLY = "I'm really sorry you're going through this, and I'm glad you told me. I'm an AI, and I can't give you the help you deserve in a moment like this, so please reach out to a person right now:\n" +
+    '  - In the US, call or text 988 (Suicide & Crisis Lifeline), any time.\n' +
+    '  - You can also text HOME to 741741 (Crisis Text Line).\n' +
+    '  - If you might act on these thoughts or are in immediate danger, call 911 or your local emergency number.\n' +
+    '  - If you can, tell someone you trust, like a friend or family member, that you need them with you right now.\n' +
+    "If you're outside the US, I can help you find a local line. You matter, and you don't have to go through this alone.";
+  const OFFLINE_REPLY = "I'm not connected to my brain yet, so I can't answer. Open Connection above and add my address (for example http://127.0.0.1:8765/chat).";
+
+  const DaymarkAI = {
+    endpoint() { return (store.raw(ENDPOINT_KEY) || window.DAYMARK_AI_ENDPOINT || '').trim(); },
+    async ask(request) {
+      if (CRISIS.test(request.message)) return { reply: CRISIS_REPLY, flag: 'safety' };   // fixed human-written reply, never model text
+      const url = this.endpoint();
+      if (!url) return { reply: OFFLINE_REPLY, flag: 'offline' };
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 120000);
+      try {
+        const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(request), signal: controller.signal });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const data = await response.json();
+        const reply = String(data.reply || '').trim();
+        return { reply: reply || '(Tiki sent an empty reply. Try asking again.)', flag: reply ? '' : 'error' };
+      } catch (error) {
+        return { reply: "I couldn't reach Tiki just now. Check that he is running and that the address under Connection is right, then try again.", flag: 'error' };
+      } finally { clearTimeout(timer); }
+    },
+    // Same as ask(), but calls onPiece(textSoFar) while Tiki is still writing. Needs a server with /chat/stream;
+    // falls back to ask() for any other server, so older setups keep working.
+    async askStream(request, onPiece) {
+      if (CRISIS.test(request.message)) return { reply: CRISIS_REPLY, flag: 'safety' };
+      const url = this.endpoint();
+      if (!url) return { reply: OFFLINE_REPLY, flag: 'offline' };
+      if (!/\/chat\/?$/.test(url) || typeof ReadableStream === 'undefined') return this.ask(request);
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 180000);
+      try {
+        const response = await fetch(url.replace(/\/?$/, '') + '/stream', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(request), signal: controller.signal });
+        if (response.status === 404 || response.status === 405 || !response.body) { clearTimeout(timer); return this.ask(request); }
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const reader = response.body.getReader(), decoder = new TextDecoder();
+        let buffer = '', full = '', final = null;
+        for (;;) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          let newline;
+          while ((newline = buffer.indexOf('\n')) >= 0) {
+            const line = buffer.slice(0, newline).trim();
+            buffer = buffer.slice(newline + 1);
+            if (!line) continue;
+            const event = JSON.parse(line);
+            if (event.error) throw new Error(event.error);
+            if (event.t) { full += event.t; onPiece(full); }
+            if (event.done) final = String(event.reply || full);
+          }
+        }
+        const reply = (final !== null ? final : full).trim();
+        return { reply: reply || '(Tiki sent an empty reply. Try asking again.)', flag: reply ? '' : 'error' };
+      } catch (error) {
+        return { reply: "I couldn't reach Tiki just now. Check that he is running and that the address under Connection is right, then try again.", flag: 'error' };
+      } finally { clearTimeout(timer); }
+    }
+  };
+  window.DaymarkAI = window.DaymarkAI || DaymarkAI;     // replace window.DaymarkAI.ask (and optionally askStream) to plug in a different backend
+
+  const loadChat = key => { const v = store.get(key, []); return Array.isArray(v) ? v : []; };
+  const saveChat = (key, list) => store.set(key, list.slice(-100));
+  const clearChats = () => { store.del(CHAT_KEY); store.del(JOURNAL_CHAT_KEY); };
+  const clock = at => new Date(at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  const msgHtml = m => `<div class="msg ${m.role === 'user' ? 'user' : 'tiki'}${m.flag === 'safety' ? ' safety' : ''}${m.flag === 'error' ? ' error' : ''}">${esc(m.content)}<small>${m.role === 'user' ? 'You' : 'Tiki'} · ${clock(m.at)}</small></div>`;
+  const typingHtml = '<div class="msg tiki typing" role="status" aria-label="Tiki is thinking"><i></i><i></i><i></i></div>';
+
+  // ----- what Tiki may see -----
+  function journalContext() {
+    if (settings.aiJournalAccess !== true) return undefined;
+    const draftTitle = (byId('journalTitle') || {}).value || '', draftBody = (byId('journalBody') || {}).value || '';
+    let budget = 8000;
+    const entries = [];
+    [...journal].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 12).forEach(entry => {
+      const body = String(entry.body || '').slice(0, 1500);
+      if (budget - body.length < 0) return;
+      budget -= body.length;
+      entries.push({ date: entry.createdAt, title: entry.title, body });
+    });
+    return { entries, draft: draftTitle || draftBody ? { title: draftTitle, body: draftBody.slice(0, 3000) } : null };
+  }
+  function planContext() {
+    if (settings.aiPlanAccess !== true) return undefined;
+    const horizon = new Date(); horizon.setDate(horizon.getDate() + 14);
+    const limit = localKey(horizon), today = localKey();
+    return {
+      goals: goals.filter(g => g.enabled !== false).slice(0, 25).map(g => ({ title: g.title, deadline: g.deadline || null, priority: g.priority, done: isDone(g) })),
+      scheduled: placements.filter(p => p.date >= today && p.date <= limit).map(p => ({ p, r: visibleRecord(p) })).filter(x => x.r).sort((a, b) => a.p.date.localeCompare(b.p.date) || (a.p.time || '').localeCompare(b.p.time || '')).slice(0, 40).map(x => ({ date: x.p.date, time: x.p.time || null, title: x.r.title, type: x.p.type }))
+    };
+  }
+  function buildContext(options = {}) {
+    const context = { date: new Date().toString() };
+    const j = journalContext(); if (j) context.journal = j;
+    if (options.plan !== false) { const p = planContext(); if (p) context.plan = p; }
+    return context;
+  }
+
+  const busy = {}, live = {};
+  // while Tiki is writing: his words so far (or the typing dots until the first word arrives)
+  const writingHtml = key => live[key] ? `<div class="msg tiki">${esc(live[key])}<small>Tiki · writing…</small></div>` : typingHtml;
+  async function sendMessage(key, text, mode, onChange) {
+    if (busy[key]) return;
+    busy[key] = true;
+    live[key] = '';
+    const messages = loadChat(key);
+    messages.push({ role: 'user', content: text, at: Date.now() });
+    saveChat(key, messages);
+    onChange(true);
+    let queued = false;
+    const onPiece = full => {
+      live[key] = full;
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; if (busy[key]) onChange(true); });   // at most one redraw per frame
+    };
+    const request = {
+      message: text,
+      history: messages.slice(-9, -1).map(m => ({ role: m.role, content: m.content })),
+      mode,
+      context: buildContext()
+    };
+    const ai = window.DaymarkAI;
+    const result = typeof ai.askStream === 'function' ? await ai.askStream(request, onPiece) : await ai.ask(request);
+    live[key] = '';
+    const after = loadChat(key);
+    after.push({ role: 'assistant', content: result.reply, at: Date.now(), flag: result.flag || '' });
+    saveChat(key, after);
+    busy[key] = false;
+    onChange(false);
+  }
+
+  const MODES = {
+    general: { label: 'General', note: 'Questions, writing and ideas', chips: ['What can you help me with?', 'Help me plan tomorrow', 'Explain something to me simply'] },
+    manager: { label: 'Manager', note: 'Plans, priorities and next steps', chips: ['Plan my day from my goals', 'What should I focus on first?', 'Break a goal into small steps'] },
+    wellness: { label: 'Check-in', note: 'Reflection and support. Not therapy.', chips: ["I'd like to check in", 'Help me wind down tonight', "I'm feeling stuck"] }
+  };
+  const currentMode = () => MODES[settings.aiMode] ? settings.aiMode : 'general';
+
+  function setJournalAccess(on) {
+    settings.aiJournalAccess = on === true;
+    persist();
+    const box = byId('aiJournalAccess'); if (box) box.checked = settings.aiJournalAccess;
+    refreshAIStatus(); refreshJournalChat();
+  }
+
+  // ----- AI Chat page -----
+  let connectionOk = null;       // null unknown, true reachable, false failed
+  function endpointLabel() { const url = window.DaymarkAI.endpoint(); try { return url ? new URL(url).host : ''; } catch (e) { return url; } }
+
+  function buildAIView() {
+    let view = byId('aiView');
+    if (!view) { view = document.createElement('section'); view.id = 'aiView'; view.className = 'view'; (byId('main') || $q('main')).append(view); }
+    if (view.dataset.ai2) return view;
+    view.dataset.ai2 = '1';
+    view.innerHTML = `
+      <div class="ai2">
+        <article class="card ai2-chat">
+          <div class="ai2-head">
+            <div class="ai2-id"><span class="avatar ai2-av" aria-hidden="true">T</span><div><h2>Tiki</h2><span class="hint" id="ai2Status"></span></div></div>
+            <div class="ai2-controls"><button class="small" type="button" id="ai2Conn" aria-expanded="false">Connection</button><button class="small" type="button" id="ai2Clear">Clear chat</button></div>
+          </div>
+          <div class="ai2-conn" id="ai2ConnPanel" hidden>
+            <label for="ai2Url" class="hint">Where Tiki is running</label>
+            <div class="ai2-conn-row"><input id="ai2Url" type="url" placeholder="http://127.0.0.1:8765/chat" autocomplete="off" spellcheck="false"><button class="secondary" type="button" id="ai2Save">Save</button><button class="secondary" type="button" id="ai2Test">Test</button></div>
+            <p class="hint" id="ai2ConnNote">Messages go only to this address. Leave it on your own computer to keep everything private.</p>
+          </div>
+          <div class="ai2-msgs" id="ai2Msgs" aria-live="polite" aria-label="Conversation with Tiki"></div>
+          <form class="ai2-compose" id="ai2Form"><label class="dm-sr" for="ai2Input">Message Tiki</label><textarea id="ai2Input" rows="1" maxlength="4000" placeholder="Message Tiki…"></textarea><button class="primary" id="ai2Send" type="submit">Send</button></form>
+          <p class="ai2-foot">Tiki is an AI, not a therapist, and can be wrong. In a crisis, call or text 988 (US).</p>
+        </article>
+        <aside class="ai2-side">
+          <article class="card"><div class="head"><div><h2>How Tiki helps</h2><p class="subtitle">Pick a mode for this chat.</p></div></div><div class="ai2-modes" id="ai2Modes"></div></article>
+          <article class="card"><div class="head"><div><h2>What Tiki can see</h2><p class="subtitle">Off by default. You decide.</p></div></div>
+            <label class="setting"><span><b>My journal</b><p>Tiki can read saved entries and your draft while you chat. He never replies on his own.</p></span><span class="toggle"><input type="checkbox" id="ai2Journal"><span class="slider"></span></span></label>
+            <label class="setting"><span><b>My goals and calendar</b><p>Lets Tiki help plan your next two weeks.</p></span><span class="toggle"><input type="checkbox" id="ai2Plan"><span class="slider"></span></span></label>
+          </article>
+        </aside>
+      </div>`;
+    bindAIView(view);
+    return view;
+  }
+
+  function renderAIMessages() {
+    const box = byId('ai2Msgs');
+    if (!box) return;
+    const messages = loadChat(CHAT_KEY), mode = currentMode();
+    if (!messages.length && !busy[CHAT_KEY]) {
+      box.innerHTML = `<div class="ai2-empty"><span class="avatar ai2-av" aria-hidden="true">T</span><h3>Hi, I'm Tiki.</h3><p>${esc(MODES[mode].note)}. Ask me anything, or start with one of these.</p><div class="ai2-chips">${MODES[mode].chips.map(c => `<button type="button" data-ai2-chip="${esc(c)}">${esc(c)}</button>`).join('')}</div></div>`;
+    } else {
+      box.innerHTML = messages.map(msgHtml).join('') + (busy[CHAT_KEY] ? writingHtml(CHAT_KEY) : '');
+      box.scrollTop = box.scrollHeight;
+    }
+  }
+
+  function refreshAIStatus() {
+    const status = byId('ai2Status');
+    if (!status) return;
+    const host = endpointLabel();
+    const dot = connectionOk === true ? 'on' : (host ? 'warn' : '');
+    const text = !host ? 'Not connected yet' : connectionOk === true ? `Connected · ${host}` : connectionOk === false ? `Can't reach ${host}` : `Address set · ${host}`;
+    status.innerHTML = `<i class="dm-dot ${dot}"></i>${esc(text)}`;
+    const j = byId('ai2Journal'), p = byId('ai2Plan');
+    if (j) j.checked = settings.aiJournalAccess === true;
+    if (p) p.checked = settings.aiPlanAccess === true;
+    const modes = byId('ai2Modes');
+    if (modes) modes.innerHTML = Object.entries(MODES).map(([key, m]) => `<button type="button" class="ai2-mode${key === currentMode() ? ' active' : ''}" data-ai2-mode="${key}" aria-pressed="${key === currentMode()}">${m.label}<span>${esc(m.note)}</span></button>`).join('');
+  }
+
+  function renderAI() { buildAIView(); refreshAIStatus(); renderAIMessages(); }
+
+  function submitAI(text) {
+    const value = text.trim();
+    if (!value || busy[CHAT_KEY]) return;
+    const input = byId('ai2Input'), send = byId('ai2Send');
+    input.value = ''; input.style.height = 'auto';
+    send.disabled = true;
+    sendMessage(CHAT_KEY, value, currentMode(), () => {
+      renderAIMessages();
+      send.disabled = !!busy[CHAT_KEY];
+      if (!busy[CHAT_KEY]) {
+        const last = loadChat(CHAT_KEY).slice(-1)[0];
+        if (last && window.DaymarkAI.endpoint()) { connectionOk = last.flag === 'error' ? false : (last.flag === 'offline' || last.flag === 'safety' ? connectionOk : true); refreshAIStatus(); }
+        input.focus();
+      }
+    });
+  }
+
+  function bindAIView(view) {
+    const input = byId('ai2Input');
+    byId('ai2Form').addEventListener('submit', event => { event.preventDefault(); submitAI(input.value); });
+    input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); submitAI(input.value); } });
+    input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 140) + 'px'; });
+    byId('ai2Clear').addEventListener('click', () => { if (!loadChat(CHAT_KEY).length || confirm('Clear this conversation from this browser?')) { store.del(CHAT_KEY); renderAIMessages(); } });
+    byId('ai2Conn').addEventListener('click', () => {
+      const panel = byId('ai2ConnPanel'); panel.hidden = !panel.hidden;
+      byId('ai2Conn').setAttribute('aria-expanded', String(!panel.hidden));
+      if (!panel.hidden) { byId('ai2Url').value = window.DaymarkAI.endpoint(); byId('ai2Url').focus(); }
+    });
+    byId('ai2Save').addEventListener('click', () => {
+      const value = byId('ai2Url').value.trim();
+      if (value && !/^https?:\/\//i.test(value)) { byId('ai2ConnNote').textContent = 'The address should start with http:// or https://'; return; }
+      if (value) store.setRaw(ENDPOINT_KEY, value); else store.del(ENDPOINT_KEY);
+      connectionOk = null; refreshAIStatus(); toast(value ? 'Tiki address saved.' : 'Tiki address removed.');
+      byId('ai2ConnNote').textContent = 'Messages go only to this address. Leave it on your own computer to keep everything private.';
+    });
+    byId('ai2Test').addEventListener('click', async () => {
+      const note = byId('ai2ConnNote'), typed = byId('ai2Url').value.trim();
+      if (typed) store.setRaw(ENDPOINT_KEY, typed);
+      if (!window.DaymarkAI.endpoint()) { note.textContent = 'Add an address first.'; return; }
+      note.textContent = 'Testing…';
+      const result = await window.DaymarkAI.ask({ message: 'Hello from DayMark. Reply with a short hello.', history: [], mode: 'general', context: { date: new Date().toString() } });
+      connectionOk = result.flag !== 'error';
+      note.textContent = connectionOk ? 'Connected. Tiki replied: ' + result.reply.slice(0, 120) : result.reply;
+      refreshAIStatus();
+    });
+    view.addEventListener('click', event => {
+      const chip = event.target.closest('[data-ai2-chip]');
+      if (chip) { submitAI(chip.dataset.ai2Chip); return; }
+      const mode = event.target.closest('[data-ai2-mode]');
+      if (mode) { settings.aiMode = mode.dataset.ai2Mode; persist(); refreshAIStatus(); renderAIMessages(); }
+    });
+    byId('ai2Journal').addEventListener('change', event => setJournalAccess(event.target.checked));
+    byId('ai2Plan').addEventListener('change', event => { settings.aiPlanAccess = event.target.checked; persist(); });
+  }
+
+  /* ------------------------------------------------------------------ 4. journal chat */
+
+  function mountJournalChat() {
+    if (byId('jcBox')) return;
+    const host = $q('#journalView .layout > article');
+    if (!host) return;
+    const box = document.createElement('section');
+    box.id = 'jcBox'; box.className = 'jc'; box.setAttribute('aria-label', 'Ask Tiki about your journal');
+    box.innerHTML = `
+      <div class="jc-head"><span class="avatar jc-av" aria-hidden="true">T</span><b>Tiki</b><span class="jc-status" id="jcStatus"></span><button class="small" type="button" id="jcToggle" aria-expanded="true">Hide</button></div>
+      <div class="jc-body" id="jcBody">
+        <label class="jc-access"><span>Let Tiki read my journal<small>He reads along quietly and only answers when you ask.</small></span><span class="toggle"><input type="checkbox" id="jcAccess" aria-label="Let Tiki read my journal"><span class="slider"></span></span></label>
+        <div class="jc-msgs" id="jcMsgs" aria-live="polite"></div>
+        <div class="jc-chips" id="jcChips"><button type="button" data-jc-chip="What patterns do you notice in my entries?">What patterns do you notice?</button><button type="button" data-jc-chip="Help me reflect on what I'm writing now.">Help me reflect on this entry</button></div>
+        <form class="jc-form" id="jcForm"><label class="dm-sr" for="jcInput">Ask Tiki</label><input id="jcInput" autocomplete="off" maxlength="1000" placeholder="Ask Tiki about what you wrote…"><button class="primary" id="jcSend" type="submit">Ask</button></form>
+        <p class="jc-note" id="jcNote"></p>
+      </div>`;
+    host.append(box);
+
+    byId('jcToggle').addEventListener('click', () => {
+      const body = byId('jcBody'); body.hidden = !body.hidden;
+      byId('jcToggle').textContent = body.hidden ? 'Show' : 'Hide';
+      byId('jcToggle').setAttribute('aria-expanded', String(!body.hidden));
+    });
+    byId('jcAccess').addEventListener('change', event => setJournalAccess(event.target.checked));
+    byId('jcChips').addEventListener('click', event => {
+      const chip = event.target.closest('[data-jc-chip]');
+      if (chip) { const input = byId('jcInput'); input.value = chip.dataset.jcChip; input.focus(); }     // fills the box; never sends by itself
+    });
+    byId('jcForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const input = byId('jcInput'), value = input.value.trim();
+      if (!value || busy[JOURNAL_CHAT_KEY]) return;
+      input.value = ''; byId('jcSend').disabled = true;
+      sendMessage(JOURNAL_CHAT_KEY, value, 'wellness', () => { renderJournalMessages(); byId('jcSend').disabled = !!busy[JOURNAL_CHAT_KEY]; if (!busy[JOURNAL_CHAT_KEY]) input.focus(); });
+    });
+    ['journalTitle', 'journalBody'].forEach(id => { const el = byId(id); if (el) el.addEventListener('input', debounce(refreshJournalChat, 250)); });
+    renderJournalMessages(); refreshJournalChat();
+  }
+
+  function debounce(fn, wait) { let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), wait); }; }
+
+  function renderJournalMessages() {
+    const box = byId('jcMsgs');
+    if (!box) return;
+    box.innerHTML = loadChat(JOURNAL_CHAT_KEY).slice(-8).map(msgHtml).join('') + (busy[JOURNAL_CHAT_KEY] ? writingHtml(JOURNAL_CHAT_KEY) : '');
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function refreshJournalChat() {
+    const status = byId('jcStatus');
+    if (!status) return;
+    const on = settings.aiJournalAccess === true;
+    const draftLength = (((byId('journalTitle') || {}).value || '') + ((byId('journalBody') || {}).value || '')).trim().length;
+    const count = journal.length;
+    const access = byId('jcAccess'); if (access) access.checked = on;
+    status.innerHTML = on
+      ? `<i class="dm-dot on jc-pulse"></i>Reading along · ${count} saved ${count === 1 ? 'entry' : 'entries'}${draftLength ? ' + your draft' : ''}`
+      : '<i class="dm-dot"></i>Journal access is off';
+    byId('jcNote').textContent = on
+      ? 'Tiki never replies unless you ask. What he can read is sent only when you press Ask, and only to your Tiki address.'
+      : "Tiki can't see your journal right now. Switch the toggle on to let him read along, or just ask a general question.";
+  }
+
+  /* ------------------------------------------------------------------ wiring */
+
+  const previousShowView = showView;
+  showView = function (view) {
+    previousShowView(view);
+    const titles = {
+      ai: ['AI Chat', 'Talk with Tiki. Private, and yours.'],
+      habits: ['Habits', 'Small actions, repeated.'],
+      stats: ['Stats', 'See how your rhythm changes over time.'],
+      calendar: ['Calendar', 'Drag goals onto a day. Click a day to fine-tune it.'],
+      journal: ['Journal', 'A quiet place to put things into words.']
+    }[view];
+    if (titles) { byId('title').textContent = titles[0]; byId('subtitle').textContent = titles[1]; }
+    if (view === 'dashboard') setGreeting();
+    if (view === 'ai') { renderAI(); setTimeout(() => { const input = byId('ai2Input'); if (input) input.focus(); }, 40); }
+    if (view === 'journal') { mountJournalChat(); refreshJournalChat(); }
+    if (view === 'calendar') renderCalendarV2();
+  };
+
+  function setGreeting() {
+    const hour = new Date().getHours(), part = hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening';
+    const profile = store.get('daymark-profile-alex', {});
+    byId('title').textContent = `Good ${part}, ${profile.name || 'there'}`;
+  }
+
+  const previousRenderJournal = renderJournal;
+  renderJournal = () => { previousRenderJournal(); refreshJournalChat(); };
+
+  // honest privacy copy now that an AI address can be set
+  const privacyCopy = $q('.privacy-copy');
+  if (privacyCopy) privacyCopy.textContent = 'Journal entries stay in this browser. When access is on, Tiki can read them while you chat, and they are sent only when you ask him something, and only to the Tiki address set under AI Chat → Connection.';
+  const settingsToggle = byId('aiJournalAccess');
+  if (settingsToggle) settingsToggle.addEventListener('change', () => setJournalAccess(settingsToggle.checked));
+
+  // deleting journal data or the account also deletes the AI conversations that may quote it
+  ['deleteJournalData', 'deleteAccountData'].forEach(id => {
+    const button = byId(id);
+    if (!button) return;
+    button.addEventListener('click', () => {
+      const original = window.confirm;
+      window.confirm = message => { window.confirm = original; const answer = original.call(window, message); if (answer) { clearChats(); renderAIMessages(); renderJournalMessages(); } return answer; };
+      setTimeout(() => { window.confirm = original; }, 0);
+    }, true);
+  });
+
+  // go
+  mountJournalChat();
+  renderAI();
+  renderCalendarV2();
+  safe(() => renderAll());
+  setGreeting();
+})();
+
+</script>
+</html>
