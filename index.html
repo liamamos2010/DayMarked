@@ -313,6 +313,216 @@ body[data-theme="light"] .chip.complete{color:#137345;background:#e1f7eb}
   .bottom>button.nav:before{content:'⚙';font-size:20px}
 }
 
+/* Polished, consistent application shell */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+body{
+  --blue:#4f46e5;
+  --soft:#eef0ff;
+  --shadow:0 10px 30px rgba(31,42,68,.07);
+  font-family:"DM Sans",Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  letter-spacing:-.01em;
+}
+body[data-theme="light"]{
+  --bg:#f5f7fb;
+  --panel:#fff;
+  --panel2:#fafbfe;
+  --text:#172033;
+  --muted:#718096;
+  --line:#e7eaf0;
+  --soft:#eef0ff;
+  background:#f5f7fb;
+}
+body[data-theme="dark"]{
+  --bg:#0c1018;
+  --panel:#131925;
+  --panel2:#171d29;
+  --text:#edf2fa;
+  --muted:#98a5b8;
+  --line:#252d3b;
+  --soft:#252b45;
+  background:radial-gradient(circle at 75% -10%,#1c2540 0,transparent 32%),var(--bg);
+}
+.app{min-height:100vh}
+.side{
+  position:fixed;
+  inset:0 auto 0 0;
+  z-index:20;
+  width:218px;
+  padding:22px 14px;
+  border-right:1px solid var(--line);
+  background:var(--panel);
+}
+.brand{
+  height:48px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 10px 16px;
+  font-size:20px;
+  letter-spacing:-.04em;
+}
+.brand span{
+  display:grid;
+  place-items:center;
+  width:32px;
+  height:32px;
+  border-radius:9px;
+  color:#fff;
+  background:var(--blue);
+  box-shadow:0 7px 16px rgba(79,70,229,.22);
+  font-size:16px;
+}
+.nav{display:grid;gap:4px}
+.nav button{
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:10px 12px;
+  border:0;
+  border-radius:10px;
+  color:var(--muted);
+  font-size:13.5px;
+  font-weight:600;
+  transition:.16s ease;
+}
+.nav button:hover{background:var(--panel2);color:var(--text)}
+.nav button.active{background:var(--soft);color:var(--blue)}
+.nav button:before{
+  width:18px;
+  text-align:center;
+  font-size:15px;
+  opacity:.85;
+}
+.nav button[data-view="dashboard"]:before{content:"⌂"}
+.nav button[data-view="calendar"]:before{content:"□"}
+.nav button[data-view="goals"]:before{content:"◎"}
+.nav button[data-view="habits"]:before{content:"↻"}
+.nav button[data-view="journal"]:before{content:"✎"}
+.nav button[data-view="stats"]:before{content:"▥"}
+.nav button[data-view="ai"]:before{content:"✦"}
+.bottom{border-top:1px solid var(--line);padding-top:12px}
+.profile{padding:12px 8px 0}
+.avatar{
+  width:36px;
+  height:36px;
+  background:#edeefe;
+  color:var(--blue);
+  border-radius:10px;
+}
+.main{
+  width:calc(100% - 218px);
+  max-width:none;
+  margin:0 0 0 218px;
+  padding:34px clamp(24px,4vw,56px) 64px;
+}
+.top{
+  max-width:1180px;
+  margin:0 auto 28px;
+  align-items:flex-start;
+}
+.title{
+  margin:5px 0 4px;
+  font-size:36px;
+  line-height:1.08;
+  letter-spacing:-.045em;
+  font-weight:700;
+}
+.eyebrow{color:var(--muted);font-size:11px;letter-spacing:.12em}
+.subtitle,.hint{color:var(--muted);line-height:1.5}
+.view.active{max-width:1180px;margin:0 auto}
+.card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--panel);
+  box-shadow:var(--shadow);
+}
+.card h2{font-size:16px;letter-spacing:-.025em}
+.head{margin-bottom:16px}
+.dashboard-grid{
+  grid-template-columns:minmax(420px,1.35fr) minmax(300px,.65fr);
+  gap:16px;
+}
+.dashboard-lower{gap:16px;margin-top:16px}
+.dashboard-lower .card,.card{padding:20px}
+.rhythm-card{grid-template-columns:190px 1fr;min-height:300px}
+.rhythm-ring{
+  width:150px;
+  height:150px;
+  background:conic-gradient(var(--blue) calc(var(--progress,0)*1%),var(--panel2) 0);
+  box-shadow:inset 0 0 0 1px var(--line);
+}
+.rhythm-ring::after{width:118px;height:118px;background:var(--panel)}
+.rhythm-percent{font-size:34px;letter-spacing:-.05em}
+.mini-calendar{gap:6px}
+.mini-weekday{font-size:10px;text-transform:uppercase;letter-spacing:.05em}
+.mini-day{
+  min-height:38px;
+  border:0;
+  border-radius:9px;
+  background:var(--panel2);
+  color:var(--muted);
+}
+.mini-day.today{
+  background:var(--blue);
+  color:#fff;
+  border:0;
+  box-shadow:0 5px 12px rgba(79,70,229,.18);
+}
+.mini-day.has-items{box-shadow:inset 0 -3px #22c55e}
+.primary,.secondary,.small,.danger{
+  min-height:38px;
+  border-radius:9px;
+  font-weight:700;
+  transition:.15s ease;
+}
+.primary{background:var(--blue);color:#fff;box-shadow:0 7px 16px rgba(79,70,229,.15)}
+.primary:hover{transform:translateY(-1px);box-shadow:0 9px 20px rgba(79,70,229,.22)}
+.secondary{background:var(--panel);border-color:var(--line);color:var(--text)}
+.small{background:var(--panel);border-color:var(--line);color:var(--muted)}
+.list{max-height:none}
+.item{background:var(--panel2);border-radius:10px}
+.field input,.field textarea,.field select,.filters input,.filters select{
+  min-height:42px;
+  border-radius:9px;
+  background:var(--panel);
+  border-color:var(--line);
+  color:var(--text);
+}
+.setting{border-bottom-color:var(--line)}
+.top .date{align-items:center}
+.top-clock{font-size:28px!important}
+.top-account-actions .small{min-height:34px!important;font-size:12px!important}
+.streak-card{margin-top:16px!important}
+.modal-card{background:var(--panel)}
+.toast{background:var(--text);color:var(--panel);border:0;box-shadow:var(--shadow)}
+@media(max-width:900px){
+  .side{width:72px;padding:18px 9px}
+  .brand{justify-content:center;padding:0 0 18px;font-size:0}
+  .brand span{width:38px;height:38px}
+  .nav button{justify-content:center;font-size:0;padding:10px}
+  .nav button:before{width:auto;font-size:18px}
+  .profile{justify-content:center;padding-left:0}
+  .profile div:not(.avatar){display:none}
+  .bottom>button.nav{font-size:0!important}
+  .main{width:calc(100% - 72px);margin-left:72px;padding:26px 18px 50px}
+  .dashboard-grid,.dashboard-lower,.layout,.cal2,.ai2,.cal2-side,.ai2-side{grid-template-columns:1fr}
+  .rhythm-card{grid-template-columns:170px 1fr}
+}
+@media(max-width:620px){
+  .side{width:58px}
+  .main{width:calc(100% - 58px);margin-left:58px;padding:22px 12px 44px}
+  .title{font-size:28px}
+  .top{margin-bottom:20px}
+  .top .date{display:none}
+  .dashboard-grid{grid-template-columns:1fr}
+  .rhythm-card{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .rhythm-breakdown{width:100%;text-align:left}
+  .dashboard-lower{grid-template-columns:1fr}
+  .card,.dashboard-lower .card{padding:16px}
+  .mini-calendar{gap:3px}
+  .mini-day{min-height:32px}
+}
 </style>
 <script>
 /* ===== DayMark launch layer =====
